@@ -1,0 +1,189 @@
+body {
+	background-image: url(../img/3.jpg);
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/*****  MENU  *****/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 39%;
+    overflow: hidden;
+    background-color: rgba(31, 31, 31, 0.9);
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-style: italic;
+    font-weight: bold;
+}
+
+li a:hover {
+    color: black;
+    text-decoration: none;
+    background-color: rgba(240,240,240,0.9);
+}
+
+.active {
+    background-color: rgb(160,160,160);
+    color: black;
+}
+
+/*****  INDEX  *****/
+.logoDiv {
+	margin-left: 42%;
+	margin-top: 25px;
+}
+
+.mainDiv {
+    margin: 0 10% 0 10%;
+    padding: 30px 70px 50px 70px;
+    /*background-color: rgba(250,250,250,0.8);*/
+	max-height: 800px;
+	overflow-y: scroll;
+	overflow-y:auto;
+}
+
+.imgDiv {
+	max-height: 70%;
+  	overflow: hidden;
+	padding-top: 15px;
+	padding-bottom: 10px;
+}
+
+.descDiv {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	max-height: 40%;
+	overflow-y: scroll;
+	overflow-y:auto;
+}
+
+.imgCont {
+    background-color: rgba(250,250,250,0.9);
+	height: 300px;
+	border-radius: 15px;
+	margin-top: 20px;
+}
+
+/*****  LOG IN  *****/
+.loginDiv {
+    margin: 70px 30% 50px 30%;
+    padding: 30px 70px 50px 70px;
+    background-color: rgba(250,250,250,0.8);
+	border-radius: 15px;
+}
+
+/*****  SIGN UP  *****/
+.signUpDiv {
+    margin: 70px 30% 50px 30%;
+    padding: 30px 70px 50px 70px;
+    background-color: rgba(250,250,250,0.8);
+	border-radius: 15px;
+}
+
+.signUpImg {
+    background-color: rgb(250,250,250);
+	height: 220px;
+	border-radius: 5px;
+	padding: 20px 70px 20px 70px;
+}
+
+.chooseFileButton {
+	background-color: #ccc;
+	border-radius: 5px;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+	width: 100%;
+	text-align: center;
+	margin-top: 5px;
+}
+
+/*****  EMERGENCY SITUATION  *****/
+.situationWrapper {
+	width: 80%;
+	margin: 50px auto;
+}
+
+.situationDataDiv {
+	float: left;
+  	overflow: hidden;
+	margin-right: 20px;
+    padding: 10px 20px 30px 20px;
+    background-color: rgba(250,250,250,0.8);
+	border-radius: 15px;
+}
+
+.commentsDiv {
+  	overflow: hidden;
+    padding: 30px 70px 50px 70px;
+    background-color: rgba(250,250,250,0.8);
+	border-radius: 15px;
+	max-width: 800px;
+	max-height: 700px;
+	overflow-y: scroll;
+	overflow-y:auto;
+}
+
+.commentDiv {
+	max-height: 110px;
+	width: 100%;
+	padding: 15px;
+	overflow-y: scroll;
+	overflow-y:auto;
+}
+
+.commentPictureDiv {
+	float: left;
+  	overflow: hidden;
+    background-color: rgba(250,250,250,0.6);
+	height: 60px;
+	width: 85px;
+	border-radius: 5px;
+}
+
+.tip {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  background: transparent;
+  border: 10px solid #ccc;
+}
+
+.tip-left {
+  top: 10px;
+  left: -25px;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-bottom-color: transparent;  
+}
+
+.dialogbox .commentBody {
+	position: relative;
+	float: right;
+	width: 80%;
+	padding: 5px;
+	background-color: #DADADA;
+	border-radius: 3px;
+	border: 5px solid #ccc;
+}
+
+.commentBody .message {
+	min-height: 30px;
+	border-radius: 3px;
+	font-family: Arial;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #797979;
+}

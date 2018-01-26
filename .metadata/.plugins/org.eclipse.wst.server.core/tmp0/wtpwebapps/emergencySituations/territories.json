@@ -1,0 +1,10 @@
+{  
+    "territories":{  
+        "Liman":{  
+            "id":"Liman",
+            "name":"Liman",
+            "area":226,
+            "population":40000
+        }
+    }
+}

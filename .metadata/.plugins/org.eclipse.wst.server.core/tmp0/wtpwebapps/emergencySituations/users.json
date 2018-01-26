@@ -1,0 +1,20 @@
+{  
+    "users":{  
+        "majami":{  
+            "username":"majami",
+            "password":"m",
+            "name":"Maja",
+            "surname":"Miljic",
+            "phoneNumber":"0656860111",
+            "email":"majami@mail",
+            "territory":{  
+                "id":"Liman",
+                "name":"Liman",
+                "area":226,
+                "population":40000
+            },
+            "status":"Active",
+            "image":"admin.jpg"
+        }
+    }
+}
