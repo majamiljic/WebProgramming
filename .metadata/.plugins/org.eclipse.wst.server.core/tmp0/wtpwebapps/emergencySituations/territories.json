@@ -1,10 +1,14 @@
 {  
     "territories":{  
         "Liman":{  
-            "id":"Liman",
             "name":"Liman",
             "area":226,
             "population":40000
+        },  
+        "Novo naselje":{  
+            "name":"Novo naselje",
+            "area":200,
+            "population":20000
         }
     }
 }

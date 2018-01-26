@@ -7,6 +7,7 @@ function logout() {
 		success : function()
 		{
 			us.setItem("loggedUser", {});
+	        us.setItem("hasCodeRunBefore", false);
 			window.location.replace("index.html");
 		}
 	});

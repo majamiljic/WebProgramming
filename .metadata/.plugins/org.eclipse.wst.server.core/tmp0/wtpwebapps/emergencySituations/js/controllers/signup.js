@@ -1,21 +1,30 @@
-var register_url = "rest/users/register";
-var image_url = "rest/users/uploadImage";
+$(document).ready(function() {
+	$.ajax({
+		type : 'GET',
+		url : 'rest/users/getTerritories',
+		success : function(data) {
+			var keys = Object.keys(data.territories);
+			var territoryList = $("#territoryList");
+			for(var i = 0; i < keys.length; i++)
+				territoryList.append("<option value=\"" + keys[i] + "\">" + keys[i] + "</option>");
+		}
+	});
+});
 
-function register()
-{
+function register() {
 	var user = {
-		username : $('input[name="username"]').val(),
-		password : $('input[name="password"]').val(),
-		name : $('input[name="name"]').val(),
-		surname : $('input[name="surname"]').val(),
-		phoneNumber : $('input[name="phoneNumber"]').val(),
-		email : $('input[name="email"]').val(),
-		territory : $('input[name="territory"]').val()
+		email : $('input#email').val(),
+		username : $('input#username').val(),
+		password : $('input#password').val(),
+		name : $('input#name').val(),
+		surname : $('input#surname').val(),
+		phoneNumber : $('input#phoneNumber').val(),
+		territory : $('#territoryList').val()
 	}
 	
 	$.ajax({
 		type : 'POST',
-		url : register_url,
+		url : 'rest/users/register',
 		contentType : 'application/json',
 		dataType : 'json',
 		data : JSON.stringify(user),
@@ -23,6 +32,7 @@ function register()
 			if(data) {
 				var file = $("#image")[0].files[0];
 				uploadImage(file);
+				window.location.replace("login.html");
 			}
 		}
 	});
@@ -30,8 +40,8 @@ function register()
 
 function uploadImage(file) {
 	$.ajax({
-		url : image_url,
-        type : "POST",
+        type : 'POST',
+		url : 'rest/users/uploadImage',
         contentType : "multipart/form-data",
         data : file,
         processData : false

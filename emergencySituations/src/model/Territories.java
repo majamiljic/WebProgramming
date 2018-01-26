@@ -1,7 +1,6 @@
 package model;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 public class Territories {
 	private HashMap<String, Territory> territories;
@@ -24,12 +23,11 @@ public class Territories {
 	}
 	
 	public void addTerritory(Territory territory) {
-		territory.setId(UUID.randomUUID().toString());
-		this.territories.put(territory.getId(), territory);
+		this.territories.put(territory.getName(), territory);
 	}
 	
 	public void removeTerritory(Territory territory) {
-		this.territories.remove(territory.getId());
+		this.territories.remove(territory.getName());
 	}
 	
 	public Territory getTerritory(String territoryId) {

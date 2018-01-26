@@ -1,19 +1,14 @@
 $(document).ready(function() {
-	if (localStorage.getItem("hasCodeRunBefore") === null) {
-		$.ajax({
-			type : 'GET',
-			url : 'rest/users/getTerritories',
-			success : function(data) {
-				var keys = Object.keys(data.territories);
-				var territoryList = $("#territoryList");
-				for(var i = 0; i < keys.length; i++)
-					territoryList.append("<option value=\"" + keys[i] + "\">" + keys[i] + "</option>");
-			}
-		});
-        localStorage.setItem("hasCodeRunBefore", true);
-    }
-	else
-		window.location.replace("login.html");
+	$.ajax({
+		type : 'GET',
+		url : 'rest/users/getTerritories',
+		success : function(data) {
+			var keys = Object.keys(data.territories);
+			var territoryList = $("#territoryList");
+			for(var i = 0; i < keys.length; i++)
+				territoryList.append("<option value=\"" + keys[i] + "\">" + keys[i] + "</option>");
+		}
+	});
 });
 
 function register() {
@@ -37,6 +32,7 @@ function register() {
 			if(data) {
 				var file = $("#image")[0].files[0];
 				uploadImage(file);
+				window.location.replace("login.html");
 			}
 		}
 	});
@@ -44,8 +40,8 @@ function register() {
 
 function uploadImage(file) {
 	$.ajax({
+        type : 'POST',
 		url : 'rest/users/uploadImage',
-        type : "POST",
         contentType : "multipart/form-data",
         data : file,
         processData : false
