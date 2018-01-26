@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;emergencySituations/WebContent/js/controllers/global.js&apos; to &apos;logout.js&apos;" description="Rename resource &apos;global.js&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/js/controllers/global.js" name="logout.js" stamp="1516978186572" updateReferences="true"/>
+</session>

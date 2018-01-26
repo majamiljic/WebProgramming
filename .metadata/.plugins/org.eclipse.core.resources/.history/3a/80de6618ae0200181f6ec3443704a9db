@@ -1,0 +1,14 @@
+function logout() {
+	var us = localStorage.getItem("loggedUser");
+	console.log(us);
+	
+	$.ajax({
+		type : 'POST',
+		url : "rest/users/logout",
+		success : function()
+		{
+			localstorage.setItem("loggedUser", {});
+			window.location.replace("index.html");
+		}
+	});
+}

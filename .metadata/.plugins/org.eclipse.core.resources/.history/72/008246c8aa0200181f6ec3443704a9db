@@ -1,0 +1,13 @@
+function logout() {
+	console.log("A~~~~~~~~~~~~~~~~~~~~");
+	localstorage.setItem("loggedUser", {});
+	window.location.replace("index.html");
+	
+	$.ajax({
+		type : 'POST',
+		url : "rest/users/logout",
+		success : function()
+		{
+		}
+	});
+}

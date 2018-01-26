@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Emergency Situations</title>
+        <link href="css/layout.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/controllers/logout.js"></script>
+    </head>
+    <body style="background-color: black">
+        <ul>
+            <li><a class="active" href="situations.html">Home</a></li>
+            <li><a href="emergencySituation.html">Emergency Situation</a></li>
+            <li><a href="registerSituation.html">Register Situation</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li style="float: right; margin-right: 20px;">
+				<a>
+					<button type="submit" onclick="logout()">Log out</button>
+				</a>
+			</li>
+        </ul>
+		
+		<h1 style="text-align: center; color: orange">Emergency Situations</h1>
+        
+		<div class="mainDiv">
+			<div class="row" align="center">
+				<div class="col-sm-4">
+					<div class="imgCont">
+						<div class="imgDiv">
+							<a href="#">
+								<img src="img/2.jpg" style="border-radius: 15px;">
+							</a>
+						</div>
+						<div class="descDiv">
+							<p>
+								<a href="#" style="text-decoration : none">
+									<b style="color:orange"> DRUGA </b>
+								</a>
+								<br>
+								fafdfsdfs
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="imgCont">
+						<div class="imgDiv">
+							<a href="#">
+								<img src="img/2.jpg" style="border-radius: 15px;">
+							</a>
+						</div>
+						<div class="descDiv">
+							<p>
+								<a href="#" style="text-decoration : none">
+									<b style="color:orange"> Treca slika </b>
+								</a>
+								<br>
+								fafdfsdfs <br>
+								fafdfsdfs <br>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="imgCont">
+						<div class="imgDiv">
+							<a href="#">
+								<img src="img/2.jpg" style="border-radius: 15px;">
+							</a>
+						</div>
+						<div class="descDiv">
+							<p>
+								<a href="#" style="text-decoration : none"> 
+									<b style="color:orange"> Prva slika </b>
+								</a>
+								<br>
+								fafdfsdfs <br>
+								fafdfsdfs <br>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+    </body>
+</html>

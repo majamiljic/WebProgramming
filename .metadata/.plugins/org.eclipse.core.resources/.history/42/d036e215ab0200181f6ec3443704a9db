@@ -1,0 +1,7 @@
+function logout() {
+	console.log("A~~~~~~~~~~~~~~~~~~~~");
+	console.log(localstorage.getItem("loggedUser"));
+	console.log("A~~~~~~~~~~~~~~~~~~~~");
+	window.location.replace("index.html");
+	localstorage.setItem("loggedUser", {});
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Emergency Situations</title>
+        <link href="css/layout.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+		<script type="text/javascript" src="js/controllers/logout.js"></script>
+    </head>
+    <body style="background-color: black">
+        <ul>
+            <li><a href="situations.html">Home</a></li>
+            <li><a href="emergencySituation.html">Emergency Situation</a></li>
+            <li><a class="active" href="registerSituation.html">Register Situation</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li style="float: right; margin-right: 20px;">
+				<a href="" onclick="logout()">Log out</a>
+			</li>
+        </ul>
+        
+        <div class="signUpDiv">
+			<h3 style="text-align: center">Register Emergency Situation</h3>
+			<br>
+			<form>
+				<div class="form-group row">
+					<label> <b>Name of the Place <span style="color: red">*</span></b> </label>
+					<input class="form-control" type="text" required>
+				</div>
+				<div class="form-group row">
+					<label> <b>District <span style="color: red">*</span></b> </label>
+					<input class="form-control" type="text" required>
+				</div>
+				<div class="form-group row">
+					<label> <b>Description <span style="color: red">*</span></b> </label>
+					<input class="form-control" type="text" required>
+				</div>
+				<div class="form-group row">
+					<label> <b>Address <span style="color: red">*</span></b> </label>
+					<input class="form-control" type="text" required>
+				</div>
+				<div class="form-group row">
+					<label> <b>Territory <span style="color: red">*</span></b> </label>
+					<input class="form-control" type="text" required>
+				</div>
+				<div class="form-group row">
+					<label> <b>Level of Emergency <span style="color: red">*</span></b> </label>
+					<input class="form-control" type="text" required>
+				</div>
+				<div class="form-group row">
+					<label> <b>Status <span style="color: red">*</span></b> </label>
+					<input class="form-control" type="text" required>
+				</div>
+				<div class="form-group row">
+					<label> <b>Volunteer <span style="color: red">*</span></b> </label>
+					<input class="form-control" type="text" required>
+				</div>
+				<div class="form-group row">
+					<label> <b>Image <span style="color: red">*</span></b> </label>
+					<div class="signUpImg">
+						<img id="image">
+					</div>
+					<label for="imgUpload" class="chooseFileButton"> Choose File...</label>
+					<input id="imgUpload" type="file" onchange="readURL(this);" style="display: none">
+				</div>
+				
+				<input type="submit" class="btn btn-success" style="width: 47%" value="Done"> &nbsp;
+				<input type="reset" class="btn btn-default" style="width: 47%" value="Reset Form">
+			</form>
+        </div>
+
+    </body>
+</html>

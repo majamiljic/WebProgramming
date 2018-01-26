@@ -4,6 +4,8 @@
         <title>Emergency Situations</title>
         <link href="css/layout.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/controllers/logout.js"></script>
     </head>
     <body style="background-color: black">
         <ul>
@@ -12,10 +14,11 @@
             <li><a href="registerSituation.html">Register Situation</a></li>
             <li><a href="profile.html">Profile</a></li>
             <li style="float: right; margin-right: 20px;">
-				<a href="login.html">Log in</a>
-			</li>
-            <li style="float: right;">
-				<a href="signup.html">Sign up</a>
+				<a>
+					<button type="submit" style="background: none; border:none" onclick="logout()">
+						Log out
+					</button>
+				</a>
 			</li>
         </ul>
 		

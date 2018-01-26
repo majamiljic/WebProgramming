@@ -1,5 +1,6 @@
-function logout()
-{
+function logout() {
+	var us = localStorage.getItem("loggedUser");
+	
 	$.ajax({
 		type : 'POST',
 		url : "rest/users/logout",

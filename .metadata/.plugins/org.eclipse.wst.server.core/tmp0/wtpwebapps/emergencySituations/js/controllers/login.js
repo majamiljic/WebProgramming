@@ -13,7 +13,6 @@ $(document).on('submit', '#loginForm', function(e)
 		data : JSON.stringify(loginInfo),
 		contentType : 'application/json',
 		success : function(data) {
-			console.log(data);
 			if(data != null) {
 				localStorage.setItem("loggedUser", JSON.stringify(data));
 				window.location.replace("situations.html");

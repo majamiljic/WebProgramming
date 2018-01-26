@@ -1,0 +1,16 @@
+function logout() {
+	console.log("A~~~~~~~~~~~~~~~~~~~~");
+	var us = localStorage.getItem("loggedUser");
+	console.log(us);
+	console.log("A~~~~~~~~~~~~~~~~~~~~");
+	window.location.replace("index.html");
+	localstorage.setItem("loggedUser", {});
+	
+	/*$.ajax({
+		type : 'POST',
+		url : "rest/users/logout",
+		success : function()
+		{
+		}
+	});*/
+}

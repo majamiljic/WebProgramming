@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Emergency Situations</title>
+        <link href="css/layout.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body style="background-color: black">
+        <ul>
+            <li><a href="situations.html">Home</a></li>
+            <li><a class="active" href="emergencySituation.html">Emergency Situation</a></li>
+            <li><a href="registerSituation.html">Register Situation</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li style="float: right; margin-right: 20px;">
+				<a href="login.html">Log in</a>
+			</li>
+            <li style="float: right;">
+				<a href="signup.html">Sign up</a>
+			</li>
+        </ul>
+        
+		<div class="situationWrapper">
+			<div class="situationDataDiv">
+				<h3 style="text-align: center">Situation Data</h3>
+				<table class="table table-striped">
+					<tbody>
+						<tr>
+							<td><b>Name of the Place</b></td>
+							<td>Bo vovo bo bo 20</td>
+						</tr>
+						<tr>
+							<td><b>District</b></td>
+							<td>Bo bo 20</td>
+						</tr>
+						<tr>
+							<td><b>Description</b></td>
+							<td>Good stuff dsdsv ssdd</td>
+						</tr>
+						<tr>
+							<td><b>Date</b></td>
+							<td>{{publisher.surname}}</td>
+						</tr>
+						<tr>
+							<td><b>Exact location (map)</b></td>
+							<td>{{address}}</td>
+						</tr>
+						<tr>
+							<td><b>Territory</b></td>
+							<td>{{Territory}}</td>
+						</tr>
+						<tr>
+							<td><b>Level of Emergency</b></td>
+							<td>{{emergencyLevel}}</td>
+						</tr>
+						<tr>
+							<td><b>Status</b></td>
+							<td>{{status}}</td>
+						</tr>
+						<tr>
+							<td><b>Volunteer</b></td>
+							<td>{{volunteer}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="commentsDiv">
+				<h3 style="text-align: center">Comments</h3> <br>
+				
+				<form>
+					<div class="form-group">
+						<textarea class="form-control" rows="3" id="comment" style="float: left; width: 80%"
+								  placeholder="Comment..."></textarea> &nbsp;
+						<button type="button" class="btn btn-default">Comment</button>
+					</div>
+				</form> <br><br><br>
+				
+				<div class="commentDiv">
+					<div class="commentPictureDiv">
+						<img src="img/2.jpg" style="max-width: 100%; max-height: 100%;">
+					</div>
+					<div class="dialogbox">
+						<div class="commentBody">
+							<span class="tip tip-left"></span>
+							<div class="message">
+								<span>I just made a comment about this comment box which is purely made from CSS.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="commentDiv">
+					<div class="commentPictureDiv">
+						<img src="img/2.jpg" style="max-width: 100%; max-height: 100%;">
+					</div>
+					<div class="dialogbox">
+						<div class="commentBody">
+							<span class="tip tip-left"></span>
+							<div class="message">
+								I just made a comment about this comment box which is purely made from CSS.
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="commentDiv">
+					<div class="commentPictureDiv">
+						<img src="img/2.jpg" style="max-width: 100%; max-height: 100%;">
+					</div>
+					<div class="dialogbox">
+						<div class="commentBody">
+							<span class="tip tip-left"></span>
+							<div class="message">
+								I just made a comment about this comment box which is purely made from CSS.
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="commentDiv">
+					<div class="commentPictureDiv">
+						<img src="img/2.jpg" style="max-width: 100%; max-height: 100%;">
+					</div>
+					<div class="dialogbox">
+						<div class="commentBody">
+							<span class="tip tip-left"></span>
+							<div class="message">
+								I just made a comment about this comment box which is purely made from CSS.
+								I just made a comment about this comment box which is purely made from CSS.
+								I just made a comment about this comment box which is purely made from CSS.
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+    </body>
+</html>
