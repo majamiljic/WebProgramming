@@ -1,0 +1,58 @@
+$(document).ready(function() {
+	$.ajax({
+		type : 'GET',
+		url : 'rest/users/getTerritories',
+		success : function(data)
+		{
+			console.log(data.territories);
+			var keys = Object.values(data.territories);
+			console.log(keys);
+			/*var data = 
+				territories.territories == null ? {} : 
+					(territories.territories instanceof Array ? territories.territories : 
+						[ territories.territories ]);*/
+			var territoryList = $("#territoryList");
+			for(var i = 0; i < (Object.keys(data[0])).length; i++) {
+				console.log(Object.keys(data[0])[i]);
+				territoryList.append("<option value=\"" + (Object.keys(data[0]))[i] + "\">" + data[i] + "</option>");
+			}
+		}
+	});
+});
+
+function register()
+{
+	var user = {
+		email : $('input[name="email"]').val(),
+		username : $('input[name="username"]').val(),
+		password : $('input[name="password"]').val(),
+		name : $('input[name="name"]').val(),
+		surname : $('input[name="surname"]').val(),
+		phoneNumber : $('input[name="phoneNumber"]').val(),
+		territory : $('#territoryList').val()
+	}
+	
+	$.ajax({
+		type : 'POST',
+		url : 'rest/users/register',
+		contentType : 'application/json',
+		dataType : 'json',
+		data : JSON.stringify(user),
+		success : function(data) {
+			if(data) {
+				var file = $("#image")[0].files[0];
+				uploadImage(file);
+			}
+		}
+	});
+};
+
+function uploadImage(file) {
+	$.ajax({
+		url : 'rest/users/uploadImage',
+        type : "POST",
+        contentType : "multipart/form-data",
+        data : file,
+        processData : false
+	}); 
+}

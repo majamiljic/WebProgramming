@@ -19,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import model.Territories;
 import model.Territory;
 import model.User;
 import model.Users;
@@ -64,16 +65,27 @@ public class UserController {
 	public void logout(@Context HttpServletRequest request) {
 		request.getSession().invalidate();
 	}
+	
+	@GET
+	@Path("/getTerritories")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Territories getTerritories(@Context HttpServletRequest request)
+	{
+		Territories terr = (Territories) ctx.getAttribute("territories");
+		if (terr == null) {
+			terr = Util.readTerritories(ctx.getRealPath(""));
+			ctx.setAttribute("territories", terr);
+		}
+		return (Territories) ctx.getAttribute("territories");
+	}
 
 	@POST
 	@Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean register(@Context HttpServletRequest request, HashMap<String, String> hashMap) {
-		Territory territory = new Territory(
-				hashMap.get("name"),
-				Integer.parseInt(hashMap.get("area")),
-				Integer.parseInt(hashMap.get("population")));
+		Territories terr = (Territories) ctx.getAttribute("territories");
+		Territory territory = terr.getTerritory(hashMap.get("territory"));
 		
 		User user = new User(
 				hashMap.get("username"),
@@ -83,7 +95,7 @@ public class UserController {
 				hashMap.get("phoneNumber"),
 				hashMap.get("email"),
 				territory,
-				hashMap.get("status"),
+				"Active",
 				hashMap.get("username") + ".jpg");
 		
 		if(usernameExists(user.getUsername()))
