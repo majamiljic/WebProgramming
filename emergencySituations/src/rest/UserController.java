@@ -169,10 +169,10 @@ public class UserController {
 	}
 	
 	@GET
-	@Path("/getUsers")
+	@Path("/getVolunteers")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Users getUsers(@Context HttpServletRequest request, String criteria) {
+	public Users getUsers(@Context HttpServletRequest request) {
 		Users retVal = new Users();
 		Users users = (Users) ctx.getAttribute("users");
 		if(users == null) {
@@ -180,9 +180,10 @@ public class UserController {
 			ctx.setAttribute("users", users);
 		}
 		for(User u : users.getUsers().values()) {
-			if(u.getUsername().contains(criteria))
+			if(!u.getUsername().equals("majami"))
 				retVal.addUser(u);
 		}
+
 		return retVal;
 	}
 	
@@ -196,10 +197,10 @@ public class UserController {
 	
 	@PUT
 	@Path("/{username}/block")
-	public synchronized void blockUser(@Context HttpServletRequest request, @PathParam("username") String username) {
+	public void blockUser(@Context HttpServletRequest request, @PathParam("username") String username) {
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		
-		if(!loggedUser.getUsername().equals("admin"))
+		if(!loggedUser.getUsername().equals("majami"))
 			return;
 		
 		Users users = (Users) ctx.getAttribute("users");
@@ -216,10 +217,10 @@ public class UserController {
 	
 	@PUT
 	@Path("/{username}/unblock")
-	public synchronized void unblockUser(@Context HttpServletRequest request, @PathParam("username") String username) {
+	public void unblockUser(@Context HttpServletRequest request, @PathParam("username") String username) {
 		User loggedUser = (User) request.getSession().getAttribute("user");
 		
-		if(!loggedUser.getUsername().equals("admin"))
+		if(!loggedUser.getUsername().equals("majami"))
 			return;
 		
 		Users users = (Users) ctx.getAttribute("users");

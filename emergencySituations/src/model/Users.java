@@ -7,6 +7,7 @@ public class Users {
 
 	public Users() {
 		super();
+		this.users = new HashMap<String, User>();
 	}
 
 	public Users(HashMap<String, User> users) {
@@ -36,11 +37,6 @@ public class Users {
 	
 	public User getUser(String username) {
 		return users.get(username);
-	}
-
-	@Override
-	public String toString() {
-		return "Users [users=" + users + "]";
 	}
 	
 }
