@@ -56,7 +56,7 @@ public class Util {
 		ObjectMapper om = new ObjectMapper();
 		Users users = null;
 		try {
-			users = om.readValue(new File(path + "/" + "users.json"), Users.class);
+			users = om.readValue(new File(path + File.separator + "users.json"), Users.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

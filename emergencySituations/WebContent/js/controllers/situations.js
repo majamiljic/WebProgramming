@@ -14,7 +14,9 @@ $(document).ready(function() {
 });
 
 function renderSituations(data) {
-	var sit = data.situations == null ? {} : (data.situations instanceof Array ? data.situations : [ data.situations ]);
+	var sit = data.situations == null ? 
+			{} : (data.situations instanceof Array ? 
+					data.situations : [ data.situations ]);
 	var map = sit[0];
 	var section = $("#situationsSection");
 	section.empty();

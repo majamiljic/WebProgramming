@@ -13,17 +13,18 @@ public class EmergencySituation {
 	private Date date;
 	private String address;
 	private Territory territory;
-	private String emergencyLevel;		// red, orange, blue
+	private String emergencyLevel;		// Red, Orange, Blue
 	private String image;
-	private String status;				// active, archived
+	private String status;				// Active, Archived
 	private User volunteer;
+	private User user;
 	
 	public EmergencySituation() {
 		super();
 	}
 
 	public EmergencySituation(String name, String district, String description, Date date, String address,
-			Territory territory, String emergencyLevel, String image, String status, User volunteer) {
+			Territory territory, String emergencyLevel, String image, String status, User user) {
 		super();
 		this.name = name;
 		this.district = district;
@@ -34,7 +35,7 @@ public class EmergencySituation {
 		this.emergencyLevel = emergencyLevel;
 		this.image = image;
 		this.status = status;
-		this.volunteer = volunteer;
+		this.user = user;
 	}
 
 	public String getId() {
@@ -125,10 +126,18 @@ public class EmergencySituation {
 		this.volunteer = volunteer;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "EmergencySituation [id=" + id + ", name=" + name + ", district=" + district + ", description=" + description
 				+ ", date=" + date + ", address=" + address + ", territory=" + territory + ", emergencyLevel="
-				+ emergencyLevel + ", image=" + image + ", status=" + status + ", volunteer=" + volunteer + "]";
+				+ emergencyLevel + ", image=" + image + ", status=" + status + ", volunteer=" + volunteer + ", user=" + user + "]";
 	}
 }
