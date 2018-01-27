@@ -4,11 +4,34 @@ $(document).ready(function() {
 		type : "GET",
 		dataType : "json",
 		success : function(loggedUser) {
+			setProfileData(loggedUser);
 			getVolunteers();
 			getTerritories();
 		}
 	});
 });
+
+function setProfileData(loggedUser) {
+	username = $("#username");
+	username.empty();
+	username.append(loggedUser.username);
+
+	email = $("#email");
+	email.empty();
+	email.append(loggedUser.email);
+
+	surname = $("#surname");
+	surname.empty();
+	surname.append(loggedUser.name + " " + loggedUser.surname);
+
+	phoneNumber = $("#phoneNumber");
+	phoneNumber.empty();
+	phoneNumber.append(loggedUser.phoneNumber);
+
+	territory = $("#territory");
+	territory.empty();
+	territory.append(loggedUser.territory.name);
+}
 
 function getVolunteers() {
 	$.ajax({

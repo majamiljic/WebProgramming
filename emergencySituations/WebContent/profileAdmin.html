@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Emergency Situations</title>
+		<link href="css/layout.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/controllers/profileAdmin.js"></script>
+		<script type="text/javascript" src="js/controllers/logout.js"></script>
+		<link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
+	</head>
+	<body style="background-color: black">
+		<ul>
+			<li><a href="situations.html">Home</a></li>
+			<li><a href="emergencySituation.html">Emergency Situation</a></li>
+			<li><a href="registerSituation.html">Register Situation</a></li>
+			<li><a class="active" href="profile.html">Profile</a></li>
+			<li style="float: right; margin-right: 20px;">
+				<a>
+				<button type="submit" style="background: none; border:none" onclick="logout()">
+				Log out
+				</button>
+				</a>
+			</li>
+		</ul>
+		<div class="situationWrapper">
+		
+			<div class="row">
+			
+				<div class="col-sm-4">
+					<div class="situationDataDiv" style="width: 100%">
+						<h3 style="text-align: center">Profile Data</h3>
+						<table class="table table-striped">
+							<tbody>
+								<tr>
+									<td><b>Username</b></td>
+									<td id="username"></td>
+								</tr>
+								<tr>
+									<td><b>Email</b></td>
+									<td id="email"></td>
+								</tr>
+								<tr>
+									<td><b>Name</b></td>
+									<td id="surname"></td>
+								</tr>
+								<tr>
+									<td><b>Phone number</b></td>
+									<td id="phoneNumber"></td>
+								</tr>
+								<tr>
+									<td><b>Territory</b></td>
+									<td id="territory"></td>
+								</tr>
+							</tbody>
+						</table>
+						<button type="button" class="btn btn-default">Edit profile info</button>
+					</div>
+				</div>
+				
+				<div class="col-sm-8">
+					<div class="situationDataDiv" style="width: 100%">
+						<h3 style="text-align: center">Volunteers</h3>
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>&nbsp;</th>
+										<th>Volunteer</th>
+										<th>Username</th>
+										<th>Phone</th>
+										<th>Territory</th>
+										<th>Email</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody class="volunteersTable"></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+			</div> <br><br>
+			
+			<div class="row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-8">
+					<div class="situationDataDiv" style="width: 100%">
+						<h3 style="text-align: center">Territories</h3>
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Area</th>
+										<th>Population</th>
+									</tr>
+								</thead>
+								<tbody class="territoriesTable"></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+</html>

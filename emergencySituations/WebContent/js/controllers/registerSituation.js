@@ -1,4 +1,29 @@
+var loggedUser;
+
 $(document).ready(function() {
+	getLoggedUser();
+	getTerritories();
+});
+
+function getLoggedUser() {
+	$.ajax({
+		url : "rest/users/loggedUser",
+		type : "GET",
+		dataType : "json",
+		success : function(data) {
+			loggedUser = data;
+		}
+	});
+}
+
+function goToProfile() {
+	if(loggedUser.username == "majami")
+		window.location.replace("profileAdmin.html");
+	else
+		window.location.replace("profileUser.html");
+}
+
+function getTerritories() {
 	$.ajax({
 		type : 'GET',
 		url : 'rest/users/getTerritories',
@@ -9,7 +34,7 @@ $(document).ready(function() {
 				territoryList.append("<option value=\"" + keys[i] + "\">" + keys[i] + "</option>");
 		}
 	});
-});
+}
 
 function registerSituation() {
 	var situation = {
