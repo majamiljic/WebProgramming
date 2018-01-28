@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -256,6 +257,20 @@ public class UserController {
 		}
 		
 		terr.addTerritory(territory);
+		Util.writeTerritories(ctx.getRealPath(""), terr);
+	}
+
+	@DELETE
+	@Path("/{id}/deleteTerritory")
+	public synchronized void deleteTerritory(@Context HttpServletRequest request, @PathParam("id") String id) {
+		Territories terr = ((Territories) ctx.getAttribute("territories"));
+		if (terr == null) {
+			terr = Util.readTerritories(ctx.getRealPath(""));
+			ctx.setAttribute("territories", terr);
+		}
+		
+		Territory t = terr.getTerritory(id);
+		terr.removeTerritory(t);
 		Util.writeTerritories(ctx.getRealPath(""), terr);
 	}
 

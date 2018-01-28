@@ -95,16 +95,20 @@ function renderUsers(users) {
 function renderTerritories(territories) {
 	var territoriesList = $(".territoriesTable");
 	territoriesList.empty();
-	
 	$.each(territories, function(index, territory) {
-		var $territory = '<tr id="territory' + territory.area + '"></tr>';
+		var $territory = '<tr id="territory' + territory.name + '"></tr>';
 		var terrHtml = 
 			"<td>" + territory.name + "</td>"
 			+ "<td>" + territory.area+ "</td>"
-			+ "<td>" + territory.population + "</td>";
+			+ "<td>" + territory.population + "</td>"
+			+ "<td> <span class='fa-stack'>"
+            + "<i class='fa fa-square fa-stack-2x'></i>"
+			+ "<i class='fa fa-close fa-stack-1x fa-inverse'"
+			+ "onclick=deleteTerritory() id=\"" + territory.name + "\"></i>"
+			+ "</span></td>";
 		
 		territoriesList.append($territory);
-		var $addedTerritory = $("#territory" + territory.area);
+		var $addedTerritory = $("#territory" + territory.name);
 		$addedTerritory.append(terrHtml);
 	});
 }
@@ -131,21 +135,39 @@ function blockUser() {
 		success : function(data) {
 			blockUnblock = $("#blockUnblock" + username);
 			blockUnblock.empty();
-			blockUnblock.append("<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i><i class='fa fa-close fa-stack-1x fa-inverse' onclick=unblockUser()></i></span>");
+			blockUnblock.append(
+					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>" +
+					"<i class='fa fa-close fa-stack-1x fa-inverse'" +
+					"onclick=unblockUser()></i></span>");
 		}
 	});
 }
 
 function unblockUser() {
 	var e = window.event;
-	username = $(e.target).parent().parent().parent()[0].id.substring(4);;
+	username = $(e.target)[0].id;
 	$.ajax({
 		type : 'PUT',
 		url : "rest/users/" + username + "/unblock",
 		success : function(data) {
 			blockUnblock = $("#blockUnblock" + username);
 			blockUnblock.empty();
-			blockUnblock.append("<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i><i class='fa fa-check fa-stack-1x fa-inverse' onclick=blockUser()></i></span>")
+			blockUnblock.append(
+					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>" +
+					"<i class='fa fa-check fa-stack-1x fa-inverse'" +
+					"onclick=blockUser()></i></span>")
+		}
+	});
+}
+
+function deleteTerritory() {
+	var e = window.event;
+	id = $(e.target)[0].id;
+	$.ajax ({
+		type : 'DELETE',
+		url : "rest/users/" + id + "/deleteTerritory",
+		success : function() {
+			$("#territory" + id).remove();
 		}
 	});
 }

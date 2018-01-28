@@ -97,7 +97,6 @@ function situationFilter() {
 	}
 }
 
-
 function ajaxSearch(serviceUrl, param) {
 	var json = JSON.stringify(param);
 	$.ajax ({
@@ -140,7 +139,7 @@ function renderSituation(situation, section) {
 		+ "<a class=\"col-md-3\">"
 			+ "<img style=\"width: 170px; height: 130px; margin-top:20px; padding: 5px\" class=\"media-object\" id=\"picture" + situation.id + "\">"
 		+ "</a>"
-		+ "<div class=\"well well-lg\" id=\"deleteProhibit" + situation.id + "\">"
+		+ "<div class=\"well well-lg\" style=\"height: 170px\" id=\"deleteProhibit" + situation.id + "\">"
 		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"sitName" + situation.id + "\"></h4>"
 		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"opName" + situation.id + "\"></h4>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"territory" + situation.id + "\"></h6>"
@@ -175,7 +174,7 @@ function renderSituation(situation, section) {
 	    + "<button class=\"btn btn-primary\" id=\"banCommentsButton" + situation.id + "\" onclick=banCommentsRest()>Prohibit Comments</button>"*/
 		+ "<td style='width: 20%;' id='activateArchive" + situation.id + "'> STATUS: "
         + "<span class='fa-stack'>"
-            + "<i class='fa fa-square fa-stack-2x'></i>";
+        + "<i class='fa fa-square fa-stack-2x'></i>";
         if(situation.status == "Active")
         	deleteBanComments += "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=archiveSituation() id=\"" + situation.id + "\"></i>";
         else
