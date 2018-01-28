@@ -235,4 +235,28 @@ public class UserController {
 		Util.writeUsers(ctx.getRealPath(""), users);
 	}
 
+	@POST
+	@Path("/registerTerritory")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void registerTerritory(@Context HttpServletRequest request, HashMap<String, String> hashMap) {
+		Territory territory = new Territory(
+				hashMap.get("name"), 
+				Integer.parseInt(hashMap.get("area")), 
+				Integer.parseInt(hashMap.get("population")));
+		
+		addTerritory(territory);
+	}
+	
+	private void addTerritory(Territory territory) {
+		Territories terr = ((Territories) ctx.getAttribute("territories"));
+		if (terr == null) {
+			terr = Util.readTerritories(ctx.getRealPath(""));
+			ctx.setAttribute("territories", terr);
+		}
+		
+		terr.addTerritory(territory);
+		Util.writeTerritories(ctx.getRealPath(""), terr);
+	}
+
 }
