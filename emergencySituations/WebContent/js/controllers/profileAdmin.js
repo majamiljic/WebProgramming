@@ -1,21 +1,25 @@
 $(document).ready(function() {
+	getLoggedUser();
+	getVolunteers();
+	getTerritories();
+});
+
+function getLoggedUser() {
 	$.ajax({
 		url : "rest/users/loggedUser",
 		type : "GET",
 		dataType : "json",
 		success : function(loggedUser) {
 			setProfileData(loggedUser);
-			getVolunteers();
-			getTerritories();
 		}
 	});
-});
+}
 
 function setProfileData(loggedUser) {
 	pic = $("#pic");
 	pic.empty();
 	pic.append("<img src='" + getPicturePath(loggedUser.username)
-			+ "'style='width:100px; height:110px; border-style:solid; border-width:2px'>")
+			+ "'style='width:100px; height:110px; border-style:solid; border-width:2px'>");
 	
 	username = $("#username");
 	username.empty();
@@ -36,6 +40,38 @@ function setProfileData(loggedUser) {
 	territory = $("#territory");
 	territory.empty();
 	territory.append(loggedUser.territory.name);
+}
+
+function editProfileInfo() {
+	usernameModal = $("#usernameModal").val();
+	passwordModal = $("#passwordModal").val();
+	emailModal = $("#emailModal").val();
+	nameModal = $("#nameModal").val();
+	surnameModal = $("#surnameModal").val();
+	phoneNumberModal = $("#phoneNumberModal").val();
+
+	var user = {
+		email : emailModal,
+		username : usernameModal,
+		password : passwordModal,
+		name : nameModal,
+		surname : surnameModal,
+		phoneNumber : phoneNumberModal
+	}
+	
+	$.ajax({
+		type : 'POST',
+		url : 'rest/users/editProfileInfo',
+		contentType : 'application/json',
+		dataType : 'json',
+		data : JSON.stringify(user),
+		success : function(data) {
+			if(data)
+				getLoggedUser();
+			else
+				alert("Username already exists!");
+		}
+	});
 }
 
 function getVolunteers() {
@@ -77,7 +113,7 @@ function renderUsers(users) {
 			+ "<td>" + user.phoneNumber + "</td>"
 			+ "<td>" + user.territory.name + "</td>"
 			+ "<td>" + user.email + "</td>"
-			+ "<td style='width: 20%;' id='blockUnblock" + user.username + "'>"
+			+ "<td id='blockUnblock" + user.username + "'>"
             + "<span class='fa-stack'>"
 	            + "<i class='fa fa-square fa-stack-2x'></i>";
             if(user.status == "Active")
@@ -101,11 +137,9 @@ function renderTerritories(territories) {
 			"<td>" + territory.name + "</td>"
 			+ "<td>" + territory.area+ "</td>"
 			+ "<td>" + territory.population + "</td>"
-			+ "<td> <span class='fa-stack'>"
-            + "<i class='fa fa-square fa-stack-2x'></i>"
-			+ "<i class='fa fa-close fa-stack-1x fa-inverse'"
-			+ "onclick=deleteTerritory() id=\"" + territory.name + "\"></i>"
-			+ "</span></td>";
+			+ "<td><button type=\"button\" class=\"btn btn-danger\""
+			+ "onclick=deleteTerritory() id=\"" + territory.name + "\">Delete</button>"
+			+ "</td>";
 		
 		territoriesList.append($territory);
 		var $addedTerritory = $("#territory" + territory.name);

@@ -34,6 +34,8 @@ function register() {
 				uploadImage(file);
 				window.location.replace("login.html");
 			}
+			else
+				alert("Username already exists!");
 		}
 	});
 };

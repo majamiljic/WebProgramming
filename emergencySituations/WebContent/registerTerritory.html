@@ -5,21 +5,26 @@
         <link href="css/layout.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/controllers/logout.js"></script>
 		<script type="text/javascript" src="js/controllers/registerTerritory.js"></script>
     </head>
     <body style="background-color: black">
         <ul>
-            <li style="float: right; margin-right: 20px; visibility: hidden;">
-				<a>Maja</a>
-			</li>
-            <li style="float: right; visibility: hidden;">
-				<a>Miljic</a>
+            <li><a href="situations.html">Home</a></li>
+            <li><a href="registerSituation.html">Register Situation</a></li>
+            <li><a href="profileAdmin.html">Profile</a></li>
+            <li style="float: right; margin-right: 20px;">
+				<a>
+					<button type="submit" style="background: none; border:none" onclick="logout()">
+						Log out
+					</button>
+				</a>
 			</li>
         </ul>
         
         <div class="loginDiv" id="regTerrForm">
 			<form action="" method="post">
-				<h3 style="text-align: center">Log in</h3>
+				<h3 style="text-align: center">Register Territory</h3>
 				<br>
 				<div class="form-group row">
 					<label><b>Name</b></label>

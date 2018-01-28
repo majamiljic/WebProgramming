@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
@@ -18,9 +20,11 @@ public class EmergencySituation {
 	private String status;				// Active, Archived
 	private User volunteer;
 	private User user;
+	private HashMap<String, Comment> comments;
 	
 	public EmergencySituation() {
 		super();
+		this.comments = new HashMap<String, Comment>();
 	}
 
 	public EmergencySituation(String name, String district, String description, Date date, String address,
@@ -133,11 +137,17 @@ public class EmergencySituation {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public void addComment(Comment comment)	{
+		comment.setId(UUID.randomUUID().toString());
+		this.comments.put(comment.getId(), comment);
+	}
 
 	@Override
 	public String toString() {
 		return "EmergencySituation [id=" + id + ", name=" + name + ", district=" + district + ", description=" + description
 				+ ", date=" + date + ", address=" + address + ", territory=" + territory + ", emergencyLevel="
-				+ emergencyLevel + ", image=" + image + ", status=" + status + ", volunteer=" + volunteer + ", user=" + user + "]";
+				+ emergencyLevel + ", image=" + image + ", status=" + status + ", volunteer=" + volunteer +
+				", user=" + user + ", comments=" + comments + "]";
 	}
 }

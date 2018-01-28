@@ -106,6 +106,34 @@ public class UserController {
 		request.getSession().setAttribute("image", user.getUsername() + ".jpg");
 		return true;
 	}
+
+	@POST
+	@Path("/editProfileInfo")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean editProfileInfo(@Context HttpServletRequest request, HashMap<String, String> hashMap) {
+		User u = (User)request.getSession().getAttribute("user");
+		
+		if(!hashMap.get("email").equals(""))
+			u.setEmail(hashMap.get("email"));
+		if(!hashMap.get("password").equals(""))
+			u.setPassword(hashMap.get("password"));
+		if(!hashMap.get("name").equals(""))
+			u.setName(hashMap.get("name"));
+		if(!hashMap.get("surname").equals(""))
+			u.setSurname(hashMap.get("surname"));
+		if(!hashMap.get("phoneNumber").equals(""))
+			u.setPhoneNumber(hashMap.get("phoneNumber"));
+		if(!hashMap.get("username").equals("")) {
+			if(usernameExists(hashMap.get("username")))
+				return false;
+			else
+				u.setUsername(hashMap.get("username"));
+		}
+
+		addUser(u);
+		return true;
+	}
 	
 	private boolean usernameExists(String username) {
 		Users users = (Users) ctx.getAttribute("users");

@@ -5,6 +5,7 @@
 		<link href="css/layout.css" rel="stylesheet">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/controllers/profileAdmin.js"></script>
 		<script type="text/javascript" src="js/controllers/logout.js"></script>
 		<link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
@@ -12,8 +13,7 @@
 	<body style="background-color: black">
 		<ul>
 			<li><a href="situations.html">Home</a></li>
-			<li><a href="emergencySituation.html">Emergency Situation</a></li>
-			<li><a href="registerSituation.html">Register Situation</a></li>
+            <li id="regSit"><a href="registerSituation.html">Register Situation</a></li>
 			<li><a class="active" href="">Profile</a></li>
 			<li style="float: right; margin-right: 20px;">
 				<a>
@@ -57,7 +57,72 @@
 								</tr>
 							</tbody>
 						</table>
-						<button type="button" class="btn btn-default">Edit profile info</button>
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+							Edit profile info
+						</button>
+						
+						<div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">Edit profile info</h4>
+									</div>
+									<div class="modal-body">
+										<table class="table table-striped">
+											<tbody>
+												<tr>
+													<td><b>Username</b></td>
+													<td>
+														<input class="form-control" type="text" id="usernameModal" autofocus>
+													</td>
+												</tr>
+												<tr>
+													<td><b>Password</b></td>
+													<td>
+														<input class="form-control" type="password" id="passwordModal">
+													</td>
+												</tr>
+												<tr>
+													<td><b>Email</b></td>
+													<td>
+														<input class="form-control" type="email" id="emailModal">
+													</td>
+												</tr>
+												<tr>
+													<td><b>Name</b></td>
+													<td>
+														<input class="form-control" type="email" id="nameModal">
+													</td>
+												</tr>
+												<tr>
+													<td><b>Surname</b></td>
+													<td>
+														<input class="form-control" type="text" id="surnameModal">
+													</td>
+												</tr>
+												<tr>
+													<td><b>Phone number</b></td>
+													<td id="phoneNumberModal">
+														<input class="form-control" type="text" id="phoneNumberModal">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-success" data-dismiss="modal"
+										onclick="editProfileInfo()">
+											Submit
+										</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">
+											Close
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 				

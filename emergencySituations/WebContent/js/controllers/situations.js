@@ -17,6 +17,10 @@ function getLoggedUser() {
 		dataType : "json",
 		success : function(data) {
 			loggedUser = data;
+			if(loggedUser.status == "Blocked") {
+				var regSit = $('#regSit');
+				regSit.hide();
+			}
 		}
 	});
 }
@@ -200,7 +204,7 @@ function renderSituation(situation, section) {
 			+ "<div id=\"comment-message\" class=\"form-row\">"
 	        + "<textarea name=\"comment\" placeholder=\"Comment...\" class=\"comment\" id=\"commentArea"
         	+ situation.id
-	        + "\" style=\"width:100%; max-width:100%; min-width:100%\" rows=\"3\" ></textarea><br />"
+	        + "\" style=\"max-width:100%; min-width:100%; max-height:150px\" rows=\"3\" ></textarea><br />"
 	        + "</div>"
 			+ "<a><input class=\"btn btn-default\" name=\"submit\" id=\"commentSubmit" + situation.id + "\" value=\"Comment\" onclick=submitComment()></a><br />"
 			+ "</form>" + "</div>" + "</div>" + "</div>";
@@ -221,7 +225,7 @@ function archiveSituation() {
 					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>"
 					+ "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=activateSituation("
 					+ id + ")></i></span>");
-			location.reload();
+			getSituations();
 		}
 	});
 }
@@ -239,7 +243,7 @@ function activateSituation() {
 					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>"
 					+ "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=archiveSituation("
 					+ id + ")></i></span>");
-			location.reload();
+			getSituations();
 		}
 	});
 }
