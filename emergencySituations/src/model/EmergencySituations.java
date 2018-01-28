@@ -11,6 +11,7 @@ public class EmergencySituations {
 
 	public EmergencySituations() {
 		super();
+		this.situations = new HashMap<String, EmergencySituation>();
 	}
 
 	public EmergencySituations(HashMap<String, EmergencySituation> situations) {

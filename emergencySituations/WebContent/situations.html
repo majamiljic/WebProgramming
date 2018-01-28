@@ -5,6 +5,7 @@
         <link href="css/layout.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/controllers/situations.js"></script>
 		<script type="text/javascript" src="js/controllers/logout.js"></script>
     </head>
     <body style="background-color: black">
@@ -12,7 +13,7 @@
             <li><a class="active" href="situations.html">Home</a></li>
             <li><a href="emergencySituation.html">Emergency Situation</a></li>
             <li><a href="registerSituation.html">Register Situation</a></li>
-            <li><a onclick="goToProfile()">Profile</a></li>
+            <li><a style="cursor: pointer;" onclick="goToProfile()">Profile</a></li>
             <li style="float: right; margin-right: 20px;">
 				<a>
 					<button type="submit" style="background: none; border:none" onclick="logout()">
@@ -24,65 +25,24 @@
 		
 		<h1 style="text-align: center; color: orange">Emergency Situations</h1>
         
-		<div class="mainDiv">
-			<div class="row" align="center">
-				<div class="col-sm-4">
-					<div class="imgCont">
-						<div class="imgDiv">
-							<a href="#">
-								<img src="img/2.jpg" style="border-radius: 15px;">
-							</a>
-						</div>
-						<div class="descDiv">
-							<p>
-								<a href="#" style="text-decoration : none">
-									<b style="color:orange"> DRUGA </b>
-								</a>
-								<br>
-								fafdfsdfs
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="imgCont">
-						<div class="imgDiv">
-							<a href="#">
-								<img src="img/2.jpg" style="border-radius: 15px;">
-							</a>
-						</div>
-						<div class="descDiv">
-							<p>
-								<a href="#" style="text-decoration : none">
-									<b style="color:orange"> Treca slika </b>
-								</a>
-								<br>
-								fafdfsdfs <br>
-								fafdfsdfs <br>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="imgCont">
-						<div class="imgDiv">
-							<a href="#">
-								<img src="img/2.jpg" style="border-radius: 15px;">
-							</a>
-						</div>
-						<div class="descDiv">
-							<p>
-								<a href="#" style="text-decoration : none"> 
-									<b style="color:orange"> Prva slika </b>
-								</a>
-								<br>
-								fafdfsdfs <br>
-								fafdfsdfs <br>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="mainDiv" style="background-color: rgba(250,250,250,0.8); margin-left:17%; margin-right:17%">
+			<select class="form-control" id="choiceSelect" style="width:200px">
+			    <option value="date">Date</option>
+			    <option value="territory">Territory</option>
+			    <option value="emergencyLevel">Emergency Level</option>
+			</select>
+			
+			<div id="inputStuffPlace"> </div>
+			
+			<input type="button" class="btn btn-default" onclick="situationFilter()" value="Filter">
+			<br><br>
+			
+			<!-- <select id="commentSort">
+				<option value="date">Date</option>
+				<option value="rating">Rating</option>
+			</select> -->
+			
+			<div id="situationsSection"></div>
 		</div>
 			
     </body>

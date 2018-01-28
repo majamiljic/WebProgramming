@@ -46,9 +46,10 @@ li a:hover {
 }
 
 .mainDiv {
-    margin: 0 10% 0 10%;
+    margin-left: 15%;
     padding: 30px 70px 50px 70px;
-    /*background-color: rgba(250,250,250,0.8);*/
+    /* background-color: rgba(250,250,250,0.8); */
+    border-radius: 25px;
 	max-height: 800px;
 	overflow-y: scroll;
 	overflow-y:auto;

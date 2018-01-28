@@ -7,6 +7,7 @@ public class Territories {
 
 	public Territories() {
 		super();
+		this.territories = new HashMap<String, Territory>();
 	}
 
 	public Territories(HashMap<String, Territory> territories) {
