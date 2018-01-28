@@ -192,7 +192,9 @@ function renderSituation(situation, section) {
 			+ "<div class=\"form-group\">"
 			+ "<form action=\"\" id=\"commentform" + situation.id + "\">"
 			+ "<div id=\"comment-message\" class=\"form-row\">"
-	        + "<textarea name=\"comment\" placeholder=\"Comment...\" class=\"comment\" id=\"commentArea" + situation.id + "\" style=\"width:100%\" rows=\"3\" ></textarea><br />"
+	        + "<textarea name=\"comment\" placeholder=\"Comment...\" class=\"comment\" id=\"commentArea"
+        	+ situation.id
+	        + "\" style=\"width:100%; max-width:100%; min-width:100%\" rows=\"3\" ></textarea><br />"
 	        + "</div>"
 			+ "<a><input class=\"btn btn-default\" name=\"submit\" id=\"commentSubmit" + situation.id + "\" value=\"Comment\" onclick=submitComment()></a><br />"
 			+ "</form>" + "</div>" + "</div>" + "</div>";

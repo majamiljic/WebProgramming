@@ -12,6 +12,11 @@ $(document).ready(function() {
 });
 
 function setProfileData(loggedUser) {
+	pic = $("#pic");
+	pic.empty();
+	pic.append("<img src='" + getPicturePath(loggedUser.username)
+			+ "'style='width:100px; height:110px; border-style:solid; border-width:2px'>")
+	
 	username = $("#username");
 	username.empty();
 	username.append(loggedUser.username);
