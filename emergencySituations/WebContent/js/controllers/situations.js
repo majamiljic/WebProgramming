@@ -167,13 +167,20 @@ function renderSituation(situation, section) {
 	var d = new Date(situation.date);
 	sitDate.append(d.toDateString());
 	
-	if((loggedUser.username == "majami") || 
-			((loggedUser.username == situation.user.username) && loggedUser.status == "Active")) {
+	if(loggedUser.username == "majami") {
 		var deleteProhibit = $("#deleteProhibit" + situation.id);
 		var deleteBanComments =
 		"<div>"
-		+ "<button class=\"btn btn-info btn-circle text-uppercase\" id=\"deleteButton" + situation.id + "\" onclick=deleteSnippetRest()>Delete</button>"
-	    + "<button class=\"btn btn-info btn-circle text-uppercase\" id=\"banCommentsButton" + situation.id + "\" onclick=banCommentsRest()>Prohibit Comments</button>"
+		/*+ "<button class=\"btn btn-primary\" id=\"deleteButton" + situation.id + "\" onclick=deleteSnippetRest()>Delete</button>&nbsp;"
+	    + "<button class=\"btn btn-primary\" id=\"banCommentsButton" + situation.id + "\" onclick=banCommentsRest()>Prohibit Comments</button>"*/
+		+ "<td style='width: 20%;' id='activateArchive" + situation.id + "'> STATUS: "
+        + "<span class='fa-stack'>"
+            + "<i class='fa fa-square fa-stack-2x'></i>";
+        if(situation.status == "Active")
+        	deleteBanComments += "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=archiveSituation() id=\"" + situation.id + "\"></i>";
+        else
+        	deleteBanComments += "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=activateSituation() id=\"" + situation.id + "\"></i>";
+        deleteBanComments += "</span>";
 	    + "</div>";
 		deleteProhibit.append(deleteBanComments);
 	}
@@ -200,6 +207,42 @@ function renderSituation(situation, section) {
 			+ "</form>" + "</div>" + "</div>" + "</div>";
 		comments.append(commentFormHtml);
 	}
+}
+
+function archiveSituation() {
+	var e = window.event;
+	id = $(e.target)[0].id;
+	$.ajax({
+		type : 'PUT',
+		url : "rest/situations/" + id + "/archive",
+		success : function(data) {
+			activateArchive = $("#activateArchive" + id);
+			activateArchive.empty();
+			activateArchive.append(
+					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>"
+					+ "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=activateSituation("
+					+ id + ")></i></span>");
+			location.reload();
+		}
+	});
+}
+
+function activateSituation() {
+	var e = window.event;
+	id = $(e.target)[0].id;
+	$.ajax({
+		type : 'PUT',
+		url : "rest/situations/" + id + "/activate",
+		success : function(data) {
+			activateArchive = $("#activateArchive" + id);
+			activateArchive.empty();
+			activateArchive.append(
+					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>"
+					+ "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=archiveSituation("
+					+ id + ")></i></span>");
+			location.reload();
+		}
+	});
 }
 
 function sortComments(comments)

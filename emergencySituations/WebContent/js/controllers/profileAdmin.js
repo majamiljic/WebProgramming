@@ -81,9 +81,9 @@ function renderUsers(users) {
             + "<span class='fa-stack'>"
 	            + "<i class='fa fa-square fa-stack-2x'></i>";
             if(user.status == "Active")
-                userHtml += "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=blockUser()></i>";
+                userHtml += "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=blockUser() id=\"" + user.username + "\"></i>";
             else
-            	userHtml += "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=unblockUser()></i>";
+            	userHtml += "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=unblockUser() id=\"" + user.username + "\"></i>";
             userHtml += "</span>";
 		
 		usersList.append($user);
@@ -124,7 +124,7 @@ function getPicturePath(picName) {
 
 function blockUser() {
 	var e = window.event;
-	username = $(e.target).parent().parent().parent()[0].id.substring(4);
+	username = $(e.target)[0].id;
 	$.ajax({
 		type : 'PUT',
 		url : "rest/users/" + username + "/block",

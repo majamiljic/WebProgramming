@@ -16,6 +16,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -181,6 +182,34 @@ public class SituationController {
 				filtered.addSituation(sit);
 		}
 		return filtered;
+	}
+	
+	@PUT
+	@Path("/{id}/archive")
+	public void archiveSituation(@Context HttpServletRequest request, @PathParam("id") String id) {
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);;
+		}
+		
+		EmergencySituation es = s.getSituation(id);
+		es.setStatus("Archived");
+		Util.writeSituations(ctx.getRealPath(""), s);
+	}
+	
+	@PUT
+	@Path("/{id}/activate")
+	public void activateSituation(@Context HttpServletRequest request, @PathParam("id") String id) {
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);;
+		}
+		
+		EmergencySituation es = s.getSituation(id);
+		es.setStatus("Active");
+		Util.writeSituations(ctx.getRealPath(""), s);
 	}
 
 }
