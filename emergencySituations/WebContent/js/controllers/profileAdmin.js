@@ -132,17 +132,20 @@ function renderTerritories(territories) {
 	var territoriesList = $(".territoriesTable");
 	territoriesList.empty();
 	$.each(territories, function(index, territory) {
-		var $territory = '<tr id="territory' + territory.name + '"></tr>';
+		var $territory = '<tr id="territory' + territory.id + '"></tr>';
 		var terrHtml = 
 			"<td>" + territory.name + "</td>"
 			+ "<td>" + territory.area+ "</td>"
 			+ "<td>" + territory.population + "</td>"
-			+ "<td><button type=\"button\" class=\"btn btn-danger\""
-			+ "onclick=deleteTerritory() id=\"" + territory.name + "\">Delete</button>"
+			+ "<td>"
+			+ "<button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\"#editT\""
+			+ "onclick=setTerritoryId() id=\"" + territory.id + "\">Edit&nbsp;&nbsp;</button>&nbsp;&nbsp;"
+			+ "<button type=\"button\" class=\"btn btn-danger\""
+			+ "onclick=deleteTerritory() id=\"" + territory.id + "\">Delete</button>"
 			+ "</td>";
 		
 		territoriesList.append($territory);
-		var $addedTerritory = $("#territory" + territory.name);
+		var $addedTerritory = $("#territory" + territory.id);
 		$addedTerritory.append(terrHtml);
 	});
 }
@@ -202,6 +205,40 @@ function deleteTerritory() {
 		url : "rest/users/" + id + "/deleteTerritory",
 		success : function() {
 			$("#territory" + id).remove();
+		}
+	});
+}
+
+var terrirotyId;
+
+function setTerritoryId() {
+	var e = window.event;
+	terrirotyId = $(e.target)[0].id;
+}
+
+function editTerritory() {
+	terrNameModal = $("#terrNameModal").val();
+	areaModal = $("#areaModal").val();
+	populationModal = $("#populationModal").val();
+
+	var territory = {
+		id : terrirotyId,
+		name : terrNameModal,
+		area : areaModal,
+		population : populationModal
+	}
+	
+	$.ajax({
+		type : 'POST',
+		url : 'rest/users/editTerritory',
+		contentType : 'application/json',
+		dataType : 'json',
+		data : JSON.stringify(territory),
+		success : function(data) {
+			if(data)
+				getTerritories();
+			else
+				alert("Territory with that name already exists!");
 		}
 	});
 }

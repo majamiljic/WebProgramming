@@ -1,6 +1,8 @@
 package model;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Territories {
 	private HashMap<String, Territory> territories;
@@ -14,6 +16,10 @@ public class Territories {
 		super();
 		this.territories = territories;
 	}
+	
+	public Territories(Territories terr) {
+		this.territories = terr.territories;
+	}
 
 	public HashMap<String, Territory> getTerritories() {
 		return territories;
@@ -24,11 +30,13 @@ public class Territories {
 	}
 	
 	public void addTerritory(Territory territory) {
-		this.territories.put(territory.getName(), territory);
+		if(territory.getId() == null)
+			territory.setId(UUID.randomUUID().toString());
+		this.territories.put(territory.getId(), territory);
 	}
 	
 	public void removeTerritory(Territory territory) {
-		this.territories.remove(territory.getName());
+		this.territories.remove(territory.getId());
 	}
 	
 	public Territory getTerritory(String territoryId) {
@@ -37,6 +45,18 @@ public class Territories {
 
 	public void removeTerritory(String territoryId) {
 		this.territories.remove(territoryId);
+	}
+
+	public boolean territoryExists(String name) {
+		Collection<Territory> t;
+		t = territories.values();
+		for (Territory territory : t) {
+			if(territory.getName().equalsIgnoreCase(name))
+				return true;
+			else
+				return false;
+		}
+		return false;
 	}
 
 	@Override

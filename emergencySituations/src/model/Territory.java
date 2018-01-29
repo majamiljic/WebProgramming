@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 @JsonAutoDetect
 public class Territory {
+	private String id;
 	private String name;
 	private int area;
 	private int population;
@@ -17,6 +18,14 @@ public class Territory {
 		this.name = name;
 		this.area = area;
 		this.population = population;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -45,6 +54,6 @@ public class Territory {
 
 	@Override
 	public String toString() {
-		return "Territory [name=" + name + ", area=" + area + ", population=" + population + "]";
+		return "Territory [id=" + id + ", name=" + name + ", area=" + area + ", population=" + population + "]";
 	}
 }

@@ -302,4 +302,36 @@ public class UserController {
 		Util.writeTerritories(ctx.getRealPath(""), terr);
 	}
 
+	@POST
+	@Path("/editTerritory")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean editTerritory(@Context HttpServletRequest request, HashMap<String, String> hashMap) {
+		Territories terr = ((Territories) ctx.getAttribute("territories"));
+		if (terr == null) {
+			terr = Util.readTerritories(ctx.getRealPath(""));
+			ctx.setAttribute("territories", terr);
+		}
+		Territory territory = terr.getTerritory(hashMap.get("id"));
+		
+		if(!hashMap.get("area").equals("")) {
+			if(Integer.parseInt(hashMap.get("area")) > 0)
+				territory.setArea(Integer.parseInt(hashMap.get("area")));
+		}
+		if(!hashMap.get("population").equals("")) {
+			if(Integer.parseInt(hashMap.get("population")) > 0)
+				territory.setPopulation(Integer.parseInt(hashMap.get("population")));
+		}
+		if(!hashMap.get("name").equals("")) {
+			if(terr.territoryExists(hashMap.get("name")))
+				return false;
+			else
+				territory.setName(hashMap.get("name"));
+		}
+
+		terr.addTerritory(territory);
+		Util.writeTerritories(ctx.getRealPath(""), terr);
+		return true;
+	}
+
 }
