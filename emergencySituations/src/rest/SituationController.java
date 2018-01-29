@@ -114,10 +114,7 @@ public class SituationController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/filterByDate")
 	public EmergencySituations filterByDate(@Context HttpServletRequest request, String date) {
-		
-		System.out.println(date);
-		
-		String d = date.replaceAll("[^a-zA-Z+0-9]", "");
+		String d = date.replaceAll("[\"-]", "");
 		
 		int day = Integer.parseInt(d.substring(6, 8));
 		int month = Integer.parseInt(d.substring(4, 6));
@@ -134,10 +131,8 @@ public class SituationController {
 			Calendar cal = Calendar.getInstance();
 		    cal.setTime(sit.getDate());
 		    int y = cal.get(Calendar.YEAR);
-		    int m = cal.get(Calendar.MONTH) + 1;
+		    int m = cal.get(Calendar.MONTH)+1;
 		    int dd = cal.get(Calendar.DAY_OF_MONTH);
-		    System.out.println("2" + day + " " + month + " " + year);
-		    System.out.println("1" + dd + " " + m + " " + y);
 			if (day == dd && month == m && year == y)
 				filtered.addSituation(sit);
 		}

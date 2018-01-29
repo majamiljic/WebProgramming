@@ -11,7 +11,7 @@ public class User {
 	private String phoneNumber;
 	private String email;
 	private Territory territory;
-	private String status;		// regular, blocked
+	private String status;		// Active, Blocked
 	private String image;
 	
 	public User() {
@@ -31,10 +31,11 @@ public class User {
 		this.status = status;
 		this.image = image;
 	}
-	public User(User u)
-	{
+	
+	public User(User u)	{
 		this.username = u.getUsername();
-		this.password = "";
+		//this.password = "";
+		this.password = u.getPassword();
 		this.name = u.getName();
 		this.surname = u.getSurname();
 		this.phoneNumber = u.getPhoneNumber();

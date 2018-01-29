@@ -70,8 +70,7 @@ public class UserController {
 	@GET
 	@Path("/getTerritories")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Territories getTerritories(@Context HttpServletRequest request)
-	{
+	public Territories getTerritories(@Context HttpServletRequest request) {
 		Territories terr = (Territories) ctx.getAttribute("territories");
 		if (terr == null) {
 			terr = Util.readTerritories(ctx.getRealPath(""));

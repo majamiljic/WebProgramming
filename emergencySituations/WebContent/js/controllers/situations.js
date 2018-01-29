@@ -49,30 +49,37 @@ function getTerritories() {
 		type : 'GET',
 		url : 'rest/users/getTerritories',
 		success : function(data) {
-			var keys = Object.keys(data.territories);
+			var values = Object.values(data.territories);
 			var territoryList = $("#territoryList");
-			for(var i = 0; i < keys.length; i++)
-				territoryList.append("<option value=\"" + keys[i] + "\">" + keys[i] + "</option>");
+			for(var i = 0; i < values.length; i++)
+				territoryList.append("<option value=\"" + values[i].name + "\">" + values[i].name + "</option>");
 		}
 	});
 }
 
 function choiceChanged() {
 	var inputStuffPlace = $("#inputStuffPlace");
-	
-	if($('#choiceSelect').val() == "date") {
+
+	if($('#choiceSelect').val() == "all") {
+		var inputStuffPlace = $("#inputStuffPlace");
+		inputStuffPlace.hide();
+	}
+	else if($('#choiceSelect').val() == "date") {
 		var str = "<input type=\"date\" id=\"dateSelect\" name=\"dateSelect\">";
+		inputStuffPlace.show();
 		inputStuffPlace.empty();
 		inputStuffPlace.append(str);
 	}
 	else if ($('#choiceSelect').val() == "territory") {
 		var str = "<select class=\"form-control\" style=\"width:200px\" id=\"territoryList\"></select>";
+		inputStuffPlace.show();
 		inputStuffPlace.empty();
 		inputStuffPlace.append(str);
 		getTerritories();
 	}
 	else if($('#choiceSelect').val() == "emergencyLevel") {
 		var str = "<select class=\"form-control\" style=\"width:200px\" id=\"emergencyLevelList\"></select>";
+		inputStuffPlace.show();
 		inputStuffPlace.empty();
 		inputStuffPlace.append(str);
 		
@@ -86,7 +93,10 @@ function choiceChanged() {
 function situationFilter() {	
 	var type = $('#choiceSelect').val();
 	
-	if (type == "date") {
+	if (type == "all") {
+		getSituations();
+	}
+	else if (type == "date") {
 		var date = $('#dateSelect').val();
 		console.log(date);
 		ajaxSearch("rest/situations/filterByDate", date);

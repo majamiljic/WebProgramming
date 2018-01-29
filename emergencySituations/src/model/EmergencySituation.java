@@ -138,6 +138,14 @@ public class EmergencySituation {
 		this.user = user;
 	}
 	
+	public HashMap<String, Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(HashMap<String, Comment> comments) {
+		this.comments = comments;
+	}
+
 	public void addComment(Comment comment)	{
 		comment.setId(UUID.randomUUID().toString());
 		this.comments.put(comment.getId(), comment);

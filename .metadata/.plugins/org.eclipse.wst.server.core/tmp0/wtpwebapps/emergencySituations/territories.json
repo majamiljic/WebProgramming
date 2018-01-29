@@ -1,1 +1,22 @@
-{"territories":{"dce6e89a-cad8-41a6-b119-449ada02edb7":{"id":"dce6e89a-cad8-41a6-b119-449ada02edb7","name":"Liman","area":226,"population":31000},"414db6f5-856d-488b-8b2a-74e55f06a9f5":{"id":"414db6f5-856d-488b-8b2a-74e55f06a9f5","name":"Vjeternik","area":50,"population":550}}}
+{  
+    "territories":{  
+        "dce6e89a-cad8-41a6-b119-449ada02edb7":{  
+            "id":"dce6e89a-cad8-41a6-b119-449ada02edb7",
+            "name":"Liman",
+            "area":226,
+            "population":31000
+        },
+        "414db6f5-856d-488b-8b2a-74e55f06a9f5":{  
+            "id":"414db6f5-856d-488b-8b2a-74e55f06a9f5",
+            "name":"Veternik",
+            "area":50,
+            "population":550
+        },
+        "414db6f5-856d-488b-8b2a-74e55f06a9a3":{  
+            "id":"414db6f5-856d-488b-8b2a-74e55f06a9a3",
+            "name":"Kamenica",
+            "area":70,
+            "population":700
+        }
+    }
+}

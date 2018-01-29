@@ -28,10 +28,10 @@ function getTerritories() {
 		type : 'GET',
 		url : 'rest/users/getTerritories',
 		success : function(data) {
-			var keys = Object.keys(data.territories);
+			var values = Object.values(data.territories);
 			var territoryList = $("#territoryList");
-			for(var i = 0; i < keys.length; i++)
-				territoryList.append("<option value=\"" + keys[i] + "\">" + keys[i] + "</option>");
+			for(var i = 0; i < values.length; i++)
+				territoryList.append("<option value=\"" + values[i].id + "\">" + values[i].name + "</option>");
 		}
 	});
 }
