@@ -153,7 +153,7 @@ function renderSituation(situation, section) {
 		+ "<a class=\"col-md-3\">"
 			+ "<img style=\"width: 170px; height: 130px; margin-top:20px; padding: 5px\" class=\"media-object\" id=\"picture" + situation.id + "\">"
 		+ "</a>"
-		+ "<div class=\"well well-lg\" style=\"height: 170px\" id=\"deleteProhibit" + situation.id + "\">"
+		+ "<div class=\"well well-lg\" style=\"height: 200px\" id=\"situationDiv" + situation.id + "\">"
 		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"sitName" + situation.id + "\"></h4>"
 		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"opName" + situation.id + "\"></h4>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"territory" + situation.id + "\"></h6>"
@@ -181,21 +181,29 @@ function renderSituation(situation, section) {
 	sitDate.append(d.toDateString());
 	
 	if(loggedUser.username == "majami") {
-		var deleteProhibit = $("#deleteProhibit" + situation.id);
-		var deleteBanComments =
+		var situationDiv = $("#situationDiv" + situation.id);
+		var changeStat =
 		"<div>"
-		/*+ "<button class=\"btn btn-primary\" id=\"deleteButton" + situation.id + "\" onclick=deleteSnippetRest()>Delete</button>&nbsp;"
-	    + "<button class=\"btn btn-primary\" id=\"banCommentsButton" + situation.id + "\" onclick=banCommentsRest()>Prohibit Comments</button>"*/
-		+ "<td style='width: 20%;' id='activateArchive" + situation.id + "'> STATUS: "
-        + "<span class='fa-stack'>"
-        + "<i class='fa fa-square fa-stack-2x'></i>";
-        if(situation.status == "Active")
-        	deleteBanComments += "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=archiveSituation() id=\"" + situation.id + "\"></i>";
-        else
-        	deleteBanComments += "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=activateSituation() id=\"" + situation.id + "\"></i>";
-        deleteBanComments += "</span>";
-	    + "</div>";
-		deleteProhibit.append(deleteBanComments);
+			/*+ "<button class=\"btn btn-primary\" id=\"deleteButton" + situation.id + "\" onclick=deleteSnippetRest()>Delete</button>&nbsp;"
+		    + "<button class=\"btn btn-primary\" id=\"banCommentsButton" + situation.id + "\" onclick=banCommentsRest()>Prohibit Comments</button>"*/
+			+ "<div id='activateArchive" + situation.id + "'>"
+				+ "STATUS: &nbsp;&nbsp;"
+				
+				+ "<span class='fa-stack'>"
+		        + "<i class='fa fa-square fa-stack-2x'></i>";
+		        if(situation.status == "Active")
+		        	changeStat += "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=archiveSituation() id=\"" + situation.id + "\"></i>";
+		        else
+		        	changeStat += "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=activateSituation() id=\"" + situation.id + "\"></i>";
+		        changeStat += 
+		        "</span><br>"
+		        + "<div id=\"putItHere" + situation.id + "\">"
+			        + "<button class=\"btn btn-default\" style=\"width:150px\" id=\"showSelect" + situation.id + "\""
+			        + "onclick=getVolunteers()>Set Volunteer</button>"
+		        + "</div>"
+	        + "</div>"
+        + "</div>";
+		situationDiv.append(changeStat);
 	}
 
 	if(situation.status == "Active") {
@@ -258,8 +266,55 @@ function activateSituation() {
 	});
 }
 
-function sortComments(comments)
-{
+function getVolunteers() {
+	var e = window.event;
+	id = $(e.target)[0].id;
+	id = id.split("showSelect")[1];
+	
+	var showSelect = $("#showSelect"+id);
+	showSelect.hide();
+	
+	var putItHere = $("#putItHere"+id);
+	var selectHtmlPart =
+		"<select class=\"form-control col-sm-4\" style=\"width:150px\" id=\"volList" + id + "\">"
+		+ "<option>&nbsp;</option>"
+		+ "</select>"
+	    + "<button class=\"btn btn-default col-sm-4\" style=\"width:150px\" id=\"addVolButton" + id + "\""
+	    + "onclick=setVolunteer()>Set</button>";
+	putItHere.prepend(selectHtmlPart);
+	var volList = $("#volList"+id);
+	
+	$.ajax({
+		url: "rest/situations/" + id + "/getVolunteers",
+		type: "GET",
+		contentType: "application/json",
+		complete: function(data) {
+			volunteers = JSON.parse(data.responseText).users;
+			var keys = Object.keys(volunteers);
+			for(var i = 0; i < keys.length; i++) {
+				volList.append("<option value=\"" + keys[i] + "\">" + keys[i] + "</option>");	
+			}
+		}
+	});
+}
+
+function setVolunteer() {
+	var e = window.event;
+	id = $(e.target)[0].id;
+	id = id.split("addVolButton")[1];
+
+	var selected = $("#volList"+id).val();
+	
+	$.ajax({
+		type : 'PUT',
+		url : "rest/situations/" + id + "/setVolunteer/" + selected,
+		success : function() {
+			getSituations();
+		}
+	});
+}
+
+function sortComments(comments) {
 	var sorted = [];
 	for(var key in comments)
 		sorted.push(comments[key])
@@ -286,18 +341,15 @@ function sortComments(comments)
 	return sorted;
 }
 
-function deleteSnippet(snippetId)
-{
+function deleteSnippet(snippetId) {
 	$("#wholeSnippet" + snippetId).remove();
 }
 
-function deleteComment(comment)
-{
+function deleteComment(comment) {
 	$("#wholeComment" + comment.id).remove();
 }
 
-function addComment(comment, snippetId)
-{
+function addComment(comment, snippetId) {
 	var comments = $("#snippetComments" + snippetId);
 	var commentHtml = "<li class=\"media-top\" id=\"wholeComment" + comment.id + "\">"
 		+ "<img class=\"media-object img-circle pull-left commentPicture\" id=\"image" + comment.id + "\">"
@@ -313,50 +365,7 @@ function addComment(comment, snippetId)
 	changeComment(comment);
 }
 
-function changeComment(comment)
-{
-	console.log(comment);
-	var loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
-	if(((loggedUser.username == comment.user.username) && !loggedUser.blocked) || (loggedUser.role == "Admin"))
-	{
-		var placeForDeleteButton = $("#commentMainArea" + comment.id);
-		placeForDeleteButton.append("<button class=\"btn btn-info btn-circle text-uppercase\" id=\"deleteButton" + comment.id + "\" onclick=\"deleteCommentRest()\">Delete</button>");
-	}
-	
-	var placeForVoteButtons = $("#commentMainArea" + comment.id);
-	placeForVoteButtons.append("<div class=\"pull-right\" id=\"placeForVote" + comment.id + "\"></div>")
-	votePlace = $("#placeForVote" + comment.id);
-	votePlace.empty();
-	votePlace.append("<h5 class=\"markValue\">" + comment.mark + "</h5>")
-	if((loggedUser.username != comment.user.username) && (!loggedUser.blocked) && (comment.users.indexOf(loggedUser.username) == -1) && (loggedUser.role != "Guest"))
-	{
-		
-		
-		votePlace.append
-		(
-		      	"<button class=\"btn btn-success btn-circle text-uppercase voteBtns\" id=\"upVote" + comment.id + "\" onclick=\"voteUp()\">+</button>" +
-		      	"<button class=\"btn btn-danger btn-circle text-uppercase voteBtns\" id=\"downVote" + comment.id + "\" onclick=\"voteDown()\">-</button>"
-		);
-	}
-	
-	var image = $("#image" + comment.id);
-	image.attr("src", comment.user.picture);
-	var nameOfTheUser = $("#user" + comment.id);
-	nameOfTheUser.empty();
-	nameOfTheUser.append(comment.user.firstName + " " + comment.user.lastName);
-	var com = $("#commentText" + comment.id);
-	com.empty();
-	com.append(comment.text);
-	var datePlace = $("#commentDate" + comment.id);
-	var date = new Date(comment.date);
-	var month = date.getMonth() + 1;
-	datePlace.empty();
-	datePlace.append("" + date.getDate() + ". " + month + ". " + date.getFullYear() + ".");
-}
-
-
-function submitComment(e)
-{
+function submitComment(e) {
 	e = e || window.event;
 	var id = e.target.id.substring(13);
 	var commentText = $("#commentArea" + id).val();
@@ -375,59 +384,17 @@ function submitComment(e)
 
 }
 
-function voteUp(e)
-{
-	e = e || window.event;
-	var id = e.target.id.substring(6);
-	var snippetId = $(e.target).parent().parent().parent().parent().parent()[0].id.substring(15);
-	var mark = 1;
-	$.ajax({
-		type : 'PUT',
-		url : "rest/snippets/" + snippetId + "/" + id + "/rateComment",
-		contentType : "application/json",
-		dataType : "json",
-		data : JSON.stringify(mark),
-		success : function(responseData)
-		{
-			if(responseData != undefined && responseData != null)
-				changeComment(responseData);
-		}
-	});
-}
-
-function voteDown(e)
-{
-	e = e || window.event;
-	var id = e.target.id.substring(8);
-	var snippetId = $(e.target).parent().parent().parent().parent().parent()[0].id.substring(15);
-	var mark = -1;
-	$.ajax({
-		type : 'PUT',
-		contentType : "application/json",
-		dataType : "json",
-		data : JSON.stringify(mark),
-		url : "rest/snippets/" + snippetId + "/" + id + "/rateComment",
-		success : function(responseData)
-		{
-			changeComment(responseData);
-		}
-	});
-}
-
-function deleteSnippetRest(e)
-{
+function deleteSnippetRest(e) {
 	e = e || window.event;
 	var id = e.target.id.substring(12);
 	$.ajax({
 		type : 'DELETE',
 		url : "rest/snippets/" + id + "/removeSnippet",
-		success : function()
-		{
+		success : function() {
 			deleteSnippet(id);
 		}
 	});
 }
 
-function banCommentsRest(e)
-{
+function banCommentsRest(e) {
 }

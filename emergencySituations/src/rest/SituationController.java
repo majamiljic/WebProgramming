@@ -26,6 +26,7 @@ import model.EmergencySituations;
 import model.Territories;
 import model.Territory;
 import model.User;
+import model.Users;
 import util.Util;
 
 @Path("/situations")
@@ -37,8 +38,7 @@ public class SituationController {
 	@GET
 	@Path("/getSituations")
 	@Produces(MediaType.APPLICATION_JSON)
-	public EmergencySituations getSituations(@Context HttpServletRequest request)
-	{
+	public EmergencySituations getSituations(@Context HttpServletRequest request) {
 		EmergencySituations sit = (EmergencySituations) ctx.getAttribute("situations");
 		if (sit == null) {
 			sit = Util.readSituations(ctx.getRealPath(""));
@@ -204,6 +204,57 @@ public class SituationController {
 		
 		EmergencySituation es = s.getSituation(id);
 		es.setStatus("Active");
+		Util.writeSituations(ctx.getRealPath(""), s);
+	}
+	
+	@GET
+	@Path("/{id}/getVolunteers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Users getVolunteers(@Context HttpServletRequest request, @PathParam("id") String id) {
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);;
+		}
+		
+		EmergencySituation es = s.getSituation(id);
+		
+		Users retVal = new Users();
+		Users users = (Users) ctx.getAttribute("users");
+		if(users == null) {
+			users = Util.readUsers(ctx.getRealPath(""));
+			ctx.setAttribute("users", users);
+		}
+		for(User u : users.getUsers().values()) {
+			if(!u.getUsername().equals("majami")
+					&& es.getTerritory().getId().equals(u.getTerritory().getId())
+						&& u.getStatus().equals("Active"))
+				retVal.addUser(u);
+		}
+
+		return retVal;
+	}
+	
+	@PUT
+	@Path("/{sitId}/setVolunteer/{userId}")
+	public void setVolunteer(@Context HttpServletRequest request,
+			@PathParam("sitId") String sitId, @PathParam("userId") String userId) {
+		
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);;
+		}
+		
+		Users users = (Users) ctx.getAttribute("users");
+		if(users == null) {
+			users = Util.readUsers(ctx.getRealPath(""));
+			ctx.setAttribute("users", users);
+		}
+		
+		User u = users.getUser(userId);
+		EmergencySituation es = s.getSituation(sitId);
+		es.setVolunteer(u);
 		Util.writeSituations(ctx.getRealPath(""), s);
 	}
 

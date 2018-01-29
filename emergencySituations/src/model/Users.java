@@ -38,5 +38,10 @@ public class Users {
 	public User getUser(String username) {
 		return users.get(username);
 	}
+
+	@Override
+	public String toString() {
+		return "Users [users=" + users + "]";
+	}
 	
 }

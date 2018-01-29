@@ -15,6 +15,22 @@
             },
             "status":"Active",
             "image":"jela.jpg"
+        }, 
+        "milica":{  
+            "username":"milica",
+            "password":"m",
+            "name":"Milica",
+            "surname":"Mackic",
+            "phoneNumber":"021639089",
+            "email":"milica@gmail.com",
+            "territory":{  
+                "id":"414db6f5-856d-488b-8b2a-74e55f06a9a3",
+	            "name":"Kamenica",
+	            "area":70,
+	            "population":700
+            },
+            "status":"Active",
+            "image":"milica.jpg"
         },
         "ana":{  
             "username":"ana",
