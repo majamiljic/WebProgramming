@@ -98,7 +98,6 @@ function situationFilter() {
 	}
 	else if (type == "date") {
 		var date = $('#dateSelect').val();
-		console.log(date);
 		ajaxSearch("rest/situations/filterByDate", date);
 	}
 	else if (type == "territory") {
@@ -135,7 +134,7 @@ function renderSituations(data) {
 					data.situations : [ data.situations ]);
 
 	var map = sit[0];
-	var section = $("#situationsSection");
+	var section = $("#situationsDiv");
 	section.empty();
 	Object.keys(map).forEach(function(key) {
 		renderSituation(map[key], section);
@@ -150,28 +149,25 @@ function renderSituation(situation, section) {
 		+ "<div class=\"row\">"
 		+ "<div class=\"col-md-12\">"
 		+ "<div class=\"media-body\" id=\"containerForDelete" + situation.id + "\">"
-		+ "<a class=\"col-md-3\">"
+		+ "<div class=\"col-md-3\">"
 			+ "<img style=\"width: 170px; height: 130px; margin-top:20px; padding: 5px\" class=\"media-object\" id=\"picture" + situation.id + "\">"
-		+ "</a>"
+		+ "</div>"
 		+ "<div class=\"well well-lg\" style=\"height: 200px\" id=\"situationDiv" + situation.id + "\">"
 		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"sitName" + situation.id + "\"></h4>"
-		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"opName" + situation.id + "\"></h4>"
+		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"volName" + situation.id + "\"></h4>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"territory" + situation.id + "\"></h6>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"sitDate" + situation.id + "\"></h6>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"sitDescription" + situation.id + "\"></h6>"
-		+ "</div></div></div></div></div></div><hr/>"
-		+ "<div class=\"tab-content\">"
-	    + "<div class=\"tab-pane active\" id=\"comments-logout\">"               
-	    + "<ul class=\"media-list\" id = \"snippetComments" + situation.id + "\">";
+		+ "</div></div></div></div></div></div></div><hr/>";
 		
 	section.prepend(situationhtml);
-	var opPic = $("#picture" + situation.id);
-	opPic.attr("src", situation.name + ".jpg");
+	var sitPic = $("#picture" + situation.id);
+	sitPic.attr("src", situation.name + ".jpg");
 	var sitName = $("#sitName" + situation.id)
 	sitName.append("<b>" + situation.name + "</b>");
-	var opName = $("#opName" + situation.id);
+	var volName = $("#volName" + situation.id);
 	if(situation.volunteer != null)
-		opName.append(situation.volunteer.name + " " + situation.volunteer.surname);
+		volName.append(situation.volunteer.name + " " + situation.volunteer.surname);
 	var territoryDiv = $("#territory" + situation.id)
 	territoryDiv.append(situation.territory.name + ", " + situation.district);
 	var descDiv = $("#sitDescription" + situation.id);
@@ -184,8 +180,6 @@ function renderSituation(situation, section) {
 		var situationDiv = $("#situationDiv" + situation.id);
 		var changeStat =
 		"<div>"
-			/*+ "<button class=\"btn btn-primary\" id=\"deleteButton" + situation.id + "\" onclick=deleteSnippetRest()>Delete</button>&nbsp;"
-		    + "<button class=\"btn btn-primary\" id=\"banCommentsButton" + situation.id + "\" onclick=banCommentsRest()>Prohibit Comments</button>"*/
 			+ "<div id='activateArchive" + situation.id + "'>"
 				+ "STATUS: &nbsp;&nbsp;"
 				
@@ -205,29 +199,65 @@ function renderSituation(situation, section) {
         + "</div>";
 		situationDiv.append(changeStat);
 	}
-
-	if(situation.status == "Active") {
-		sortedComments = sortComments(situation.comments);
-		$.each(sortedComments, function(index, comment) {
-			addComment(comment, situation.id);
-		});
-	}
 	
 	if(situation.status == "Active" && loggedUser.status == "Active") {
 		var comments = $("#wrap" + situation.id);
-		var commentFormHtml = "<div class=\"row\">"
+		var commentFormHtml =
+			"<div class=\"row\""
+			+ "<div id=\"commentsDiv\""
+			+ "style=\"background-color:white; border: 1px solid; border-radius:15px; width:80%; margin-left: 10%\">"
+			+ "</div></div><br><br>"
+			+ "<div class=\"row\">"
 			+ "<div class=\"col-md-12\">"
 			+ "<div class=\"form-group\">"
 			+ "<form action=\"\" id=\"commentform" + situation.id + "\">"
 			+ "<div id=\"comment-message\" class=\"form-row\">"
-	        + "<textarea name=\"comment\" placeholder=\"Comment...\" class=\"comment\" id=\"commentArea"
-        	+ situation.id
-	        + "\" style=\"max-width:100%; min-width:100%; max-height:150px\" rows=\"3\" ></textarea><br />"
+	        + "<textarea class=\"form-control\" name=\"comment\" placeholder=\"Comment...\""
+	        + "class=\"comment\" id=\"commentArea" + situation.id + "\""
+	        + "style=\"max-width:100%; min-width:100%; max-height:150px\" rows=\"3\" ></textarea><br />"
 	        + "</div>"
-			+ "<a><input class=\"btn btn-default\" name=\"submit\" id=\"commentSubmit" + situation.id + "\" value=\"Comment\" onclick=submitComment()></a><br />"
-			+ "</form>" + "</div>" + "</div>" + "</div>";
+			+ "<a>"
+			+ "<input class=\"btn btn-default\" name=\"submit\" id=\"commentSubmit" + situation.id + "\""
+			+ "value=\"Comment\" onclick=submitComment()></a><br />"
+			+ "</form></div></div></div>";
 		comments.append(commentFormHtml);
+		
+		if(situation.comments != null) {
+			renderComment(situation.comments);
+		}
 	}
+}
+
+function renderComment(comments) {
+	var commentsDiv = $("#commentsDiv");
+	commentsDiv.empty();
+	
+	$.each(comments, function(index, comm) {
+		var $comm = "<div class=\"row\" id=\"comm\"" + comm.id + "\">"
+		+ "<div class=\"col-md-3\">"
+			+ "<img style=\"width: 80px; height: 90px; border-radius:20px; padding: 5px\""
+			+ "class=\"media-object\" id=\"userPicture" + comm.id + "\">"
+		+ "</div> &nbsp;&nbsp;"
+		+ "<div class=\"col-md-9\">"
+			+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"commUsername" + comm.id + "\"></h4>"
+			+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"commText" + comm.id + "\"></h6>"
+			+ "<p id=\"commDate" + comm.id + "\"></p>"
+		+ "</div>"
+		+ "<hr width=\"2px\"></div>";
+		
+		commentsDiv.append($comm);
+
+		var userPicture = $("#userPicture" + comm.id);
+		userPicture.attr("src", getPicturePath(comm.user.username));
+		var commUsername = $("#commUsername" + comm.id)
+		commUsername.append("<b>" + comm.user.username + "</b>");
+		var commText = $("#commText" + comm.id)
+		commText.append(comm.text);
+		var commDate = $("#commDate" + comm.id)
+		var d = new Date(comm.date);
+		commDate.append(d.toDateString());
+
+	});
 }
 
 function archiveSituation() {
@@ -241,8 +271,8 @@ function archiveSituation() {
 			activateArchive.empty();
 			activateArchive.append(
 					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>"
-					+ "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=activateSituation("
-					+ id + ")></i></span>");
+					+ "<i class='fa fa-close fa-stack-1x fa-inverse'"
+					+ "onclick=activateSituation() id=\"" + id + "\"></i></span>");
 			getSituations();
 		}
 	});
@@ -259,8 +289,8 @@ function activateSituation() {
 			activateArchive.empty();
 			activateArchive.append(
 					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>"
-					+ "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=archiveSituation("
-					+ id + ")></i></span>");
+					+ "<i class='fa fa-check fa-stack-1x fa-inverse'"
+					+ "onclick=archiveSituation() id=\"" + id + "\"></i></span>");
 			getSituations();
 		}
 	});
@@ -314,87 +344,16 @@ function setVolunteer() {
 	});
 }
 
-function sortComments(comments) {
-	var sorted = [];
-	for(var key in comments)
-		sorted.push(comments[key])
-	var criteria = $("#commentSort").val();
-	for(var i = 0; i < sorted.length; i++)
-	{
-		for(var j = i; j < sorted.length; j++)
-		{
-			console.log(criteria);
-			if(criteria == "date" && sorted[i].date > sorted[j].date)
-			{
-				var tmp = sorted[i];
-				sorted[i] = sorted[j];
-				sorted[j] = tmp;
-			}
-			else if(criteria == "rating" && sorted[i].mark > sorted[j].mark)
-			{
-				var tmp = sorted[i];
-				sorted[i] = sorted[j];
-				sorted[j] = tmp;
-			}
-		}
-	}
-	return sorted;
-}
 
-function deleteSnippet(snippetId) {
-	$("#wholeSnippet" + snippetId).remove();
-}
-
-function deleteComment(comment) {
-	$("#wholeComment" + comment.id).remove();
-}
-
-function addComment(comment, snippetId) {
-	var comments = $("#snippetComments" + snippetId);
-	var commentHtml = "<li class=\"media-top\" id=\"wholeComment" + comment.id + "\">"
-		+ "<img class=\"media-object img-circle pull-left commentPicture\" id=\"image" + comment.id + "\">"
-		+ "<div class=\"media-body\">"
-		+ "<div class=\"well well-lg\" id=\"commentMainArea" + comment.id + "\">"
-		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"user" + comment.id + "\"></h4>"
-		+ "<p class=\"media-comment\" id=\"commentDate" + comment.id + "\"></p>"
-		+ "<p class=\"media-comment\" id = \"commentText" + comment.id + "\"></p>"
-		+ "</div>"
-		+ "</div>"
-		+ "</li>";
-	comments.prepend(commentHtml);
-	changeComment(comment);
-}
-
-function submitComment(e) {
-	e = e || window.event;
-	var id = e.target.id.substring(13);
-	var commentText = $("#commentArea" + id).val();
+function getPicturePath(picName) {
+	var path = "";
 	$.ajax({
-		type : 'POST',
-		url : "rest/snippets/" + id + "/addComment",
-		contentType : "application/json",
+		type : 'GET',
+		url : "rest/users/getImage",
 		dataType : "json",
-		data : commentText,
-		success : function(responseData)
-		{
-			if(responseData != null)
-				addComment(responseData, id)
+		success : function(data) {
+			path = data.responseText;
 		}
 	});
-
-}
-
-function deleteSnippetRest(e) {
-	e = e || window.event;
-	var id = e.target.id.substring(12);
-	$.ajax({
-		type : 'DELETE',
-		url : "rest/snippets/" + id + "/removeSnippet",
-		success : function() {
-			deleteSnippet(id);
-		}
-	});
-}
-
-function banCommentsRest(e) {
+	return path + picName + ".jpg";
 }

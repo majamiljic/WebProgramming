@@ -4,11 +4,12 @@
 <fullyQualifiedTypeName name="java.sql.Date"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
-<fullyQualifiedTypeName name="model.EmergencySituation"/>
 <fullyQualifiedTypeName name="javax.ws.rs.DELETE"/>
 <fullyQualifiedTypeName name="java.util.UUID"/>
 <fullyQualifiedTypeName name="model.Territories"/>
 <fullyQualifiedTypeName name="model.Territory"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="model.EmergencySituation"/>
+<fullyQualifiedTypeName name="model.EmergencySituations"/>
 </qualifiedTypeNameHistroy>

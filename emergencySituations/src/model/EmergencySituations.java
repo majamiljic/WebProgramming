@@ -28,7 +28,8 @@ public class EmergencySituations {
 	}
 	
 	public void addSituation(EmergencySituation situation) {
-		situation.setId(UUID.randomUUID().toString());
+		if(situation.getId() == null)
+			situation.setId(UUID.randomUUID().toString());
 		this.situations.put(situation.getId(), situation);
 	}
 	
