@@ -1,9 +1,9 @@
+var logUser;
 $(document).ready(function() {
 	getLoggedUser();
 	getVolunteers();
 	getTerritories();
 });
-
 function getLoggedUser() {
 	$.ajax({
 		url : "rest/users/loggedUser",
@@ -11,6 +11,7 @@ function getLoggedUser() {
 		dataType : "json",
 		success : function(loggedUser) {
 			setProfileData(loggedUser);
+			logUser = loggedUser;
 		}
 	});
 }
@@ -40,6 +41,22 @@ function setProfileData(loggedUser) {
 	territory = $("#territory");
 	territory.empty();
 	territory.append(loggedUser.territory.name);
+}
+
+function setExistingData() {
+	usernameModal = $("#usernameModal");
+	passwordModal = $("#passwordModal");
+	emailModal = $("#emailModal");
+	nameModal = $("#nameModal");
+	surnameModal = $("#surnameModal");
+	phoneNumberModal = $("#phoneNumberModal");
+
+	usernameModal.attr("placeholder", logUser.username);
+	passwordModal.attr("placeholder", logUser.password);
+	emailModal.attr("placeholder", logUser.email);
+	nameModal.attr("placeholder", logUser.name);
+	surnameModal.attr("placeholder", logUser.surname);
+	phoneNumberModal.attr("placeholder", logUser.phoneNumber);
 }
 
 function editProfileInfo() {
@@ -214,6 +231,12 @@ var terrirotyId;
 function setTerritoryId() {
 	var e = window.event;
 	terrirotyId = $(e.target)[0].id;
+
+	terrNameModal = $("#terrNameModal");
+	areaModal = $("#areaModal");
+	populationModal = $("#populationModal");
+	
+	
 }
 
 function editTerritory() {

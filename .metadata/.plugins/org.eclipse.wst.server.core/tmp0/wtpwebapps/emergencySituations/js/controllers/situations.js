@@ -8,6 +8,9 @@ $(document).ready(function() {
 	$("#choiceSelect").on("change", function() {
 		choiceChanged();
 	});
+	$("#searchSelect").on("change", function() {
+		searchSelectChanged();
+	});
 });
 
 function getLoggedUser() {
@@ -60,10 +63,8 @@ function getTerritories() {
 function choiceChanged() {
 	var inputStuffPlace = $("#inputStuffPlace");
 
-	if($('#choiceSelect').val() == "all") {
-		var inputStuffPlace = $("#inputStuffPlace");
+	if($('#choiceSelect').val() == "all")
 		inputStuffPlace.hide();
-	}
 	else if($('#choiceSelect').val() == "date") {
 		var str = "<input type=\"date\" id=\"dateSelect\" name=\"dateSelect\">";
 		inputStuffPlace.show();
@@ -71,14 +72,14 @@ function choiceChanged() {
 		inputStuffPlace.append(str);
 	}
 	else if ($('#choiceSelect').val() == "territory") {
-		var str = "<select class=\"form-control\" style=\"width:200px\" id=\"territoryList\"></select>";
+		var str = "<select class=\"form-control col-md-3\" id=\"territoryList\"></select>";
 		inputStuffPlace.show();
 		inputStuffPlace.empty();
 		inputStuffPlace.append(str);
 		getTerritories();
 	}
 	else if($('#choiceSelect').val() == "emergencyLevel") {
-		var str = "<select class=\"form-control\" style=\"width:200px\" id=\"emergencyLevelList\"></select>";
+		var str = "<select class=\"form-control col-md-3\" id=\"emergencyLevelList\"></select>";
 		inputStuffPlace.show();
 		inputStuffPlace.empty();
 		inputStuffPlace.append(str);
@@ -93,9 +94,8 @@ function choiceChanged() {
 function situationFilter() {	
 	var type = $('#choiceSelect').val();
 	
-	if (type == "all") {
+	if (type == "all")
 		getSituations();
-	}
 	else if (type == "date") {
 		var date = $('#dateSelect').val();
 		ajaxSearch("rest/situations/filterByDate", date);
@@ -107,6 +107,66 @@ function situationFilter() {
 	else if (type == "emergencyLevel") {
 		var emergencyLevel = $('#emergencyLevelList').val();
 		ajaxSearch("rest/situations/filterByEmergencyLevel", emergencyLevel);
+	}
+	else if (type == "noVolunteer")
+		ajaxSearch("rest/situations/filterByNoVolunteer", "");
+}
+
+function searchSelectChanged() {
+	var searchSelectInput = $("#searchSelectInput");
+
+	if($('#searchSelect').val() == "all")
+		searchSelectInput.hide();
+	else if($('#searchSelect').val() == "territoryName") {
+		var str = "<input class=\"form-control col-md-3\" type=\"text\""
+		+ "id=\"territoryNameSelect\" placeholder=\"Search by Territory Name...\">";
+		searchSelectInput.show();
+		searchSelectInput.empty();
+		searchSelectInput.append(str);
+	}
+	else if ($('#searchSelect').val() == "district") {
+		var str = "<input class=\"form-control col-md-3\" type=\"text\""
+		+ "id=\"districtSelect\" placeholder=\"Search by District...\">";
+		searchSelectInput.show();
+		searchSelectInput.empty();
+		searchSelectInput.append(str);
+	}
+	else if($('#searchSelect').val() == "description") {
+		var str = "<input class=\"form-control col-md-3\" type=\"text\""
+		+ "id=\"descriptionSelect\" placeholder=\"Search by Description...\">";
+		searchSelectInput.show();
+		searchSelectInput.empty();
+		searchSelectInput.append(str);
+	}
+	else if($('#searchSelect').val() == "volunteer") {
+		var str = "<input class=\"form-control col-md-3\" type=\"text\""
+		+ "id=\"volunteerSelect\" placeholder=\"Search by Volunteer...\">";
+		searchSelectInput.show();
+		searchSelectInput.empty();
+		searchSelectInput.append(str);
+	}
+}
+
+function situationSearch() {	
+	var type = $('#searchSelect').val();
+	
+	if (type == "all")
+		getSituations();
+	else if (type == "territoryName") {
+		var territoryName = $('#territoryNameSelect').val();
+		ajaxSearch("rest/situations/searchByTerritoryName", territoryName);
+	}
+	else if (type == "district") {
+		var district = $('#districtSelect').val();
+		ajaxSearch("rest/situations/searchByDistrict", district);
+	}
+	else if (type == "description") {
+		var description = $('#descriptionSelect').val();
+		ajaxSearch("rest/situations/searchByDescription", description);
+	}
+	else if (type == "volunteer") {
+		var volunteer = $('#volunteerSelect').val();
+		ajaxSearch("rest/situations/searchByVolunteer", volunteer);
 	}
 }
 
@@ -148,7 +208,6 @@ function renderSituation(situation, section) {
 		+ "<div id=\"main" + situation.id + "\">"
 		+ "<div class=\"row\">"
 		+ "<div class=\"col-md-12\">"
-		+ "<div class=\"media-body\" id=\"containerForDelete" + situation.id + "\">"
 		+ "<div class=\"col-md-3\">"
 			+ "<img style=\"width: 170px; height: 130px; margin-top:20px; padding: 5px\" class=\"media-object\" id=\"picture" + situation.id + "\">"
 		+ "</div>"
@@ -158,7 +217,7 @@ function renderSituation(situation, section) {
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"territory" + situation.id + "\"></h6>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"sitDate" + situation.id + "\"></h6>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"sitDescription" + situation.id + "\"></h6>"
-		+ "</div></div></div></div></div></div></div><hr/>";
+		+ "</div></div></div></div></div></div><hr/>";
 		
 	section.prepend(situationhtml);
 	var sitPic = $("#picture" + situation.id);
@@ -210,16 +269,14 @@ function renderSituation(situation, section) {
 			+ "<div class=\"row\">"
 			+ "<div class=\"col-md-12\">"
 			+ "<div class=\"form-group\">"
-			+ "<form action=\"\" id=\"commentform" + situation.id + "\">"
 			+ "<div id=\"comment-message\" class=\"form-row\">"
 	        + "<textarea class=\"form-control\" name=\"comment\" placeholder=\"Comment...\""
 	        + "class=\"comment\" id=\"commentArea" + situation.id + "\""
 	        + "style=\"max-width:100%; min-width:100%; max-height:150px\" rows=\"3\" ></textarea><br />"
 	        + "</div>"
-			+ "<a>"
-			+ "<input class=\"btn btn-default\" name=\"submit\" id=\"commentSubmit" + situation.id + "\""
-			+ "value=\"Comment\" onclick=submitComment()></a><br />"
-			+ "</form></div></div></div>";
+			+ "<button class=\"btn btn-default\" id=\"commentSubmit" + situation.id + "\""
+			+ "onclick=submitComment()> Comment </button><br />"
+			+ "</div></div></div>";
 		comments.append(commentFormHtml);
 		
 		if(situation.comments != null) {
@@ -257,6 +314,31 @@ function renderComment(comments) {
 		var d = new Date(comm.date);
 		commDate.append(d.toDateString());
 
+	});
+}
+
+function submitComment() {
+	var e = window.event;
+	id = $(e.target)[0].id;
+	id = id.split("commentSubmit")[1];
+	var comm = $("#commentArea" + id).val();
+	var json = {
+		sitId: id,
+		text: comm,
+		usersId: loggedUser.username
+	};
+	
+	var selected = $("#volList"+id).val();
+	
+	$.ajax({
+		type : 'POST',
+		url : "rest/situations/submitComment",
+		dataType: "json",
+		contentType: "application/json",
+		data : JSON.stringify(json),
+		success : function() {
+			getSituations();
+		}
 	});
 }
 

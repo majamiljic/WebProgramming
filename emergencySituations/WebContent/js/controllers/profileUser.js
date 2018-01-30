@@ -1,3 +1,5 @@
+var logUser;
+
 $(document).ready(function() {
 	getLoggedUser();
 });
@@ -8,6 +10,7 @@ function getLoggedUser() {
 		type : "GET",
 		dataType : "json",
 		success : function(loggedUser) {
+			logUser = loggedUser;
 			setProfileData(loggedUser);
 			getMySituations(loggedUser);
 			if(loggedUser.status == "Blocked") {
@@ -43,6 +46,22 @@ function setProfileData(loggedUser) {
 	territory = $("#territory");
 	territory.empty();
 	territory.append(loggedUser.territory.name);
+}
+
+function setExistingData() {
+	usernameModal = $("#usernameModal");
+	passwordModal = $("#passwordModal");
+	emailModal = $("#emailModal");
+	nameModal = $("#nameModal");
+	surnameModal = $("#surnameModal");
+	phoneNumberModal = $("#phoneNumberModal");
+
+	usernameModal.attr("placeholder", logUser.username);
+	passwordModal.attr("placeholder", logUser.password);
+	emailModal.attr("placeholder", logUser.email);
+	nameModal.attr("placeholder", logUser.name);
+	surnameModal.attr("placeholder", logUser.surname);
+	phoneNumberModal.attr("placeholder", logUser.phoneNumber);
 }
 
 function editProfileInfo() {

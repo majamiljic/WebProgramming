@@ -21,6 +21,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import model.Comment;
 import model.EmergencySituation;
 import model.EmergencySituations;
 import model.Territories;
@@ -148,7 +149,7 @@ public class SituationController {
 		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
 		if (s == null) {
 			s = Util.readSituations(ctx.getRealPath(""));
-			ctx.setAttribute("situations", s);;
+			ctx.setAttribute("situations", s);
 		}
 		
 		EmergencySituations filtered = new EmergencySituations();
@@ -168,7 +169,7 @@ public class SituationController {
 		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
 		if (s == null) {
 			s = Util.readSituations(ctx.getRealPath(""));
-			ctx.setAttribute("situations", s);;
+			ctx.setAttribute("situations", s);
 		}
 		
 		EmergencySituations filtered = new EmergencySituations();
@@ -178,6 +179,25 @@ public class SituationController {
 		}
 		return filtered;
 	}
+
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/filterByNoVolunteer")
+	public EmergencySituations filterByNoVolunteer(@Context HttpServletRequest request, String emLevel) {
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);
+		}
+		
+		EmergencySituations filtered = new EmergencySituations();
+		for (EmergencySituation sit : s.getSituations().values()) {
+			if (sit.getVolunteer() == null)
+				filtered.addSituation(sit);
+		}
+		
+		return filtered;
+	}
 	
 	@PUT
 	@Path("/{id}/archive")
@@ -185,7 +205,7 @@ public class SituationController {
 		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
 		if (s == null) {
 			s = Util.readSituations(ctx.getRealPath(""));
-			ctx.setAttribute("situations", s);;
+			ctx.setAttribute("situations", s);
 		}
 		
 		EmergencySituation es = s.getSituation(id);
@@ -199,7 +219,7 @@ public class SituationController {
 		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
 		if (s == null) {
 			s = Util.readSituations(ctx.getRealPath(""));
-			ctx.setAttribute("situations", s);;
+			ctx.setAttribute("situations", s);
 		}
 		
 		EmergencySituation es = s.getSituation(id);
@@ -214,7 +234,7 @@ public class SituationController {
 		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
 		if (s == null) {
 			s = Util.readSituations(ctx.getRealPath(""));
-			ctx.setAttribute("situations", s);;
+			ctx.setAttribute("situations", s);
 		}
 		
 		EmergencySituation es = s.getSituation(id);
@@ -243,7 +263,7 @@ public class SituationController {
 		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
 		if (s == null) {
 			s = Util.readSituations(ctx.getRealPath(""));
-			ctx.setAttribute("situations", s);;
+			ctx.setAttribute("situations", s);
 		}
 		
 		Users users = (Users) ctx.getAttribute("users");
@@ -256,6 +276,121 @@ public class SituationController {
 		EmergencySituation es = s.getSituation(sitId);
 		es.setVolunteer(u);
 		Util.writeSituations(ctx.getRealPath(""), s);
+	}
+	
+	@POST
+	@Path("/submitComment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void submitComment(@Context HttpServletRequest request, HashMap<String, String> hashMap) {
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);
+		}
+		EmergencySituation es = s.getSituation(hashMap.get("sitId"));
+
+		Users users = (Users) ctx.getAttribute("users");
+		if(users == null) {
+			users = Util.readUsers(ctx.getRealPath(""));
+			ctx.setAttribute("users", users);
+		}
+		User user = users.getUser(hashMap.get("usersId"));
+		
+		Comment comment = new Comment();
+		comment.setText(hashMap.get("text"));
+		comment.setUser(user);
+		comment.setDate(new Date());
+		
+		es.addComment(comment);
+		
+		Util.writeSituations(ctx.getRealPath(""), s);
+	}
+
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/searchByTerritoryName")
+	public EmergencySituations searchByTerritoryName(@Context HttpServletRequest request, String param) {
+		String searchParam = param.substring(1, param.length() - 1);
+		
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);
+		}
+		
+		EmergencySituations filtered = new EmergencySituations();
+		for (EmergencySituation sit : s.getSituations().values()) {
+			if (sit.getTerritory().getName().toLowerCase().contains(searchParam.toLowerCase()))
+				filtered.addSituation(sit);
+		}
+		
+		return filtered;
+	}
+
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/searchByDistrict")
+	public EmergencySituations searchByDistrict(@Context HttpServletRequest request, String param) {
+		String searchParam = param.substring(1, param.length() - 1);
+		
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);
+		}
+		
+		EmergencySituations filtered = new EmergencySituations();
+		for (EmergencySituation sit : s.getSituations().values()) {
+			if (sit.getDistrict().toLowerCase().contains(searchParam.toLowerCase()))
+				filtered.addSituation(sit);
+		}
+		
+		return filtered;
+	}
+
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/searchByDescription")
+	public EmergencySituations searchByDescription(@Context HttpServletRequest request, String param) {
+		String searchParam = param.substring(1, param.length() - 1);
+		
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);
+		}
+		
+		EmergencySituations filtered = new EmergencySituations();
+		for (EmergencySituation sit : s.getSituations().values()) {
+			if (sit.getDescription().toLowerCase().contains(searchParam.toLowerCase()))
+				filtered.addSituation(sit);
+		}
+
+		return filtered;
+	}
+
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/searchByVolunteer")
+	public EmergencySituations searchByVolunteer(@Context HttpServletRequest request, String param) {
+		String searchParam = param.substring(1, param.length() - 1);
+		
+		EmergencySituations s = (EmergencySituations) ctx.getAttribute("situations");
+		if (s == null) {
+			s = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", s);
+		}
+		
+		EmergencySituations filtered = new EmergencySituations();
+		for (EmergencySituation sit : s.getSituations().values()) {
+			if (sit.getVolunteer().getUsername().toLowerCase().contains(searchParam.toLowerCase())
+					|| sit.getVolunteer().getName().toLowerCase().contains(searchParam.toLowerCase())
+					|| sit.getVolunteer().getSurname().toLowerCase().contains(searchParam.toLowerCase())
+					|| sit.getVolunteer().getEmail().toLowerCase().contains(searchParam.toLowerCase()))
+				filtered.addSituation(sit);
+		}
+
+		return filtered;
 	}
 
 }
