@@ -20,6 +20,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import model.EmergencySituation;
+import model.EmergencySituations;
 import model.Territories;
 import model.Territory;
 import model.User;
@@ -198,7 +200,6 @@ public class UserController {
 	
 	@GET
 	@Path("/getVolunteers")
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Users getUsers(@Context HttpServletRequest request) {
 		Users retVal = new Users();
@@ -212,6 +213,26 @@ public class UserController {
 				retVal.addUser(u);
 		}
 
+		return retVal;
+	}
+	
+	@GET
+	@Path("/{id}/getMySituations")
+	@Produces(MediaType.APPLICATION_JSON)
+	public EmergencySituations getMySituations(@Context HttpServletRequest request, @PathParam("id") String id) {
+		EmergencySituations retVal = new EmergencySituations();
+		
+		EmergencySituations sit = (EmergencySituations) ctx.getAttribute("situations");
+		if (sit == null) {
+			sit = Util.readSituations(ctx.getRealPath(""));
+			ctx.setAttribute("situations", sit);
+		}
+		
+		for(EmergencySituation situation : sit.getSituations().values()) {
+			if(situation.getStatus().equals("Active") && situation.getVolunteer().getUsername().equals(id))
+				retVal.addSituation(situation);
+		}
+		
 		return retVal;
 	}
 	

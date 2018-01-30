@@ -9,6 +9,7 @@ function getLoggedUser() {
 		dataType : "json",
 		success : function(loggedUser) {
 			setProfileData(loggedUser);
+			getMySituations(loggedUser);
 			if(loggedUser.status == "Blocked") {
 				var regSit = $('#regSit');
 				regSit.hide();
@@ -87,4 +88,39 @@ function getPicturePath(picName) {
 		}
 	});
 	return path + picName + ".jpg";
+}
+
+function getMySituations(loggedUser) {
+	$.ajax({
+		url: "rest/users/" + loggedUser.username + "/getMySituations",
+		type: "GET",
+		contentType: "application/json",
+		complete: function(data) {
+			situations = JSON.parse(data.responseText).situations;
+			renderSituations(situations);
+		}
+	});
+}
+
+function renderSituations(situations) {
+	var situationList = $(".mySituationsTable");
+	situationList.empty();
+	
+	$.each(situations, function(index, situation) {
+		var $situation = '<tr id="situation' + situation.id + '"></tr>';
+		var situationHtml = 
+			"<td>"
+				+ "<img src='" + getPicturePath(situation.name) + "' style='width:90px; height:70px;'>"
+			+ "</td>"
+			+ "<td>" + situation.name + "</td>"
+			+ "<td>" + situation.district + "</td>"
+			+ "<td>" + situation.description + "</td>"
+			+ "<td>" + situation.territory.name + "</td>"
+			+ "<td>" + situation.emergencyLevel + "</td>"
+			+ "<td><button type=\"button\" class=\"btn btn-default\">Open Map</button></td>";
+		
+        situationList.append($situation);
+		var $addedSituation = $("#situation" + situation.id);
+		$addedSituation.append(situationHtml);
+	});
 }

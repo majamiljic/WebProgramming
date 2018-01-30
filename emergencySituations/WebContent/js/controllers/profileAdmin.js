@@ -120,7 +120,7 @@ function renderUsers(users) {
                 userHtml += "<i class='fa fa-check fa-stack-1x fa-inverse' onclick=blockUser() id=\"" + user.username + "\"></i>";
             else
             	userHtml += "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=unblockUser() id=\"" + user.username + "\"></i>";
-            userHtml += "</span>";
+            userHtml += "</span></td>";
 		
 		usersList.append($user);
 		var $addedUser = $("#user" + user.username);
@@ -175,7 +175,7 @@ function blockUser() {
 			blockUnblock.append(
 					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>" +
 					"<i class='fa fa-close fa-stack-1x fa-inverse'" +
-					"onclick=unblockUser()></i></span>");
+					"onclick=unblockUser() id=\"" + username + "\"></i></span>");
 		}
 	});
 }
@@ -192,7 +192,7 @@ function unblockUser() {
 			blockUnblock.append(
 					"<span class='fa-stack'><i class='fa fa-square fa-stack-2x'></i>" +
 					"<i class='fa fa-check fa-stack-1x fa-inverse'" +
-					"onclick=blockUser()></i></span>")
+					"onclick=blockUser() id=\"" + username + "\"></i></span>")
 		}
 	});
 }
