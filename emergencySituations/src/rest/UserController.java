@@ -46,17 +46,13 @@ public class UserController {
 			users = (Users) ctx.getAttribute("users");
 		}
 
-		User user = (User) request.getSession().getAttribute("user");
-		
 		String username = hashMap.get("username");
 		String password = hashMap.get("password");
 		
-		if(user != null)
-			return new User(user);
 		if(users.getUser(username) != null) {
 			if(users.getUser(username).getPassword().equals(password)) {
 				request.getSession().setAttribute("user", users.getUser(username));
-				User ret = new User(users.getUser(username));
+				User ret = users.getUser(username);
 				return ret;
 			}
 		}
@@ -85,7 +81,7 @@ public class UserController {
 	@Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean register(@Context HttpServletRequest request, HashMap<String, String> hashMap) {
+	public boolean register(@Context HttpServletRequest request, HashMap<String, String> hashMap) {		
 		Territories terr = (Territories) ctx.getAttribute("territories");
 		Territory territory = terr.getTerritory(hashMap.get("territory"));
 		
@@ -191,8 +187,8 @@ public class UserController {
 	@Path("/guestLogin")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User createGuest(@Context HttpServletRequest request) {
-		User u = new User("username", "password", "name",
-				"surname", "phoneNumber", "email",
+		User u = new User("guest", "g", "Guest",
+				"Guest", "phoneNumber", "email",
 				new Territory(), "", "guest.jpg");
 		request.getSession().setAttribute("user", u);
 		return u;
@@ -229,8 +225,11 @@ public class UserController {
 		}
 		
 		for(EmergencySituation situation : sit.getSituations().values()) {
-			if(situation.getStatus().equals("Active") && situation.getVolunteer().getUsername().equals(id))
-				retVal.addSituation(situation);
+			if(situation.getStatus().equals("Active")) {
+				if(situation.getVolunteer() != null)
+					if(situation.getVolunteer().getUsername().equals(id))
+						retVal.addSituation(situation);
+			}
 		}
 		
 		return retVal;

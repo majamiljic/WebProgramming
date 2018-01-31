@@ -1,6 +1,5 @@
-$(document).on('submit', '#loginForm', function(e)
-{
-	e.preventDefault();
+$(document).on('submit', '#loginForm', function(e) {
+
 	var loginInfo = {
 		username : $('input#username').val(),
 		password : $('input#password').val()
@@ -19,7 +18,6 @@ $(document).on('submit', '#loginForm', function(e)
 			}
 			else
 				alert("Wrong username or password");
-		},
-		error : function() { console.log("Error"); }
+		}
 	});
 });

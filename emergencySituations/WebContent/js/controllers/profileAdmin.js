@@ -120,7 +120,7 @@ function renderUsers(users) {
 	usersList.empty();
 	
 	$.each(users, function(index, user) {
-		var $user = '<tr id="user' + user.username + '"></tr>';
+		var u = '<tr id="user' + user.username + '"></tr>';
 		var userHtml = 
 			"<td>"
 				+ "<img src='" + getPicturePath(user.username) + "' style='width:70px; height:70px;'>"
@@ -139,7 +139,7 @@ function renderUsers(users) {
             	userHtml += "<i class='fa fa-close fa-stack-1x fa-inverse' onclick=unblockUser() id=\"" + user.username + "\"></i>";
             userHtml += "</span></td>";
 		
-		usersList.append($user);
+		usersList.append(u);
 		var $addedUser = $("#user" + user.username);
 		$addedUser.append(userHtml);
 	});

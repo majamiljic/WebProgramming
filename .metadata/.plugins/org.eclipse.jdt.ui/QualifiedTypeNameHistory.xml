@@ -11,6 +11,6 @@
 <fullyQualifiedTypeName name="model.EmergencySituation"/>
 <fullyQualifiedTypeName name="model.EmergencySituations"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="model.Comment"/>
 <fullyQualifiedTypeName name="model.Territories"/>
+<fullyQualifiedTypeName name="model.Comment"/>
 </qualifiedTypeNameHistroy>

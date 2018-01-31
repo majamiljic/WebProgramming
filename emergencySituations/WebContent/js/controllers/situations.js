@@ -450,7 +450,6 @@ function setAddress() {
 
 function initMap() {
 	var address = localStorage.getItem("address");
-	console.log(address);
 	var map = new google.maps.Map(document.getElementById('mapDiv'), {
 		zoom: 15,
 		center: {lat: 45.2671352, lng: 19.8335496}
@@ -461,7 +460,6 @@ function initMap() {
 }
 
 function geocodeAddress(geocoder, resultsMap, address) {
-	console.log(address);
 	geocoder.geocode({'address': address}, function(results, status) {
 		if (status === 'OK') {
 			resultsMap.setCenter(results[0].geometry.location);

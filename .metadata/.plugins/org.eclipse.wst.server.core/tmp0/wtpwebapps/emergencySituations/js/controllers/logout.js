@@ -4,10 +4,8 @@ function logout() {
 	$.ajax({
 		type : 'POST',
 		url : "rest/users/logout",
-		success : function()
-		{
+		success : function() {
 			us.setItem("loggedUser", {});
-	        us.setItem("hasCodeRunBefore", false);
 			window.location.replace("index.html");
 		}
 	});

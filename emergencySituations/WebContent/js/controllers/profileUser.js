@@ -135,8 +135,7 @@ function renderSituations(situations) {
 			+ "<td>" + situation.district + "</td>"
 			+ "<td>" + situation.description + "</td>"
 			+ "<td>" + situation.territory.name + "</td>"
-			+ "<td>" + situation.emergencyLevel + "</td>"
-			+ "<td><button type=\"button\" class=\"btn btn-default\">Open Map</button></td>";
+			+ "<td>" + situation.emergencyLevel + "</td>";
 		
         situationList.append($situation);
 		var $addedSituation = $("#situation" + situation.id);

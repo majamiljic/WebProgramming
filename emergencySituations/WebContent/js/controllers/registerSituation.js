@@ -37,29 +37,42 @@ function getTerritories() {
 }
 
 function registerSituation() {
-	var situation = {
-		name : $('input#name').val(),
-		description : $('input#description').val(),
-		address : $('input#address').val(),
-		district : $('input#district').val(),
-		territory : $('#territoryList').val(),
-		emergencyLevel : $('#emergencyLevel').val()
-	}
+	var name = $('#name').val();
+	var description = $('#description').val();
+	var address = $('#address').val();
+	var district = $('#district').val();
+	var territory = $('#territoryList').val();
+	var emergencyLevel = $('#emergencyLevel').val();
+	var image = $('#image').val();
 	
-	$.ajax({
-		type : 'POST',
-		url : 'rest/situations/registerSituation',
-		contentType : 'application/json',
-		dataType : 'json',
-		data : JSON.stringify(situation),
-		success : function(data) {
-			if(data) {
-				var file = $("#image")[0].files[0];
-				uploadImage(file);
-				window.location.replace("situations.html");
-			}
+	if(name == "" || description == "" || address == "" || district == "" ||
+			territory == "" || emergencyLevel == "" || image == "")
+		window.alert("All fields are required");
+	else {
+		var situation = {
+			name : name,
+			description : description,
+			address : address,
+			district : district,
+			territory : territory,
+			emergencyLevel : emergencyLevel
 		}
-	});
+		
+		$.ajax({
+			type : 'POST',
+			url : 'rest/situations/registerSituation',
+			contentType : 'application/json',
+			dataType : 'json',
+			data : JSON.stringify(situation),
+			success : function(data) {
+				if(data) {
+					var file = $("#image")[0].files[0];
+					uploadImage(file);
+					window.location.replace("situations.html");
+				}
+			}
+		});
+	}
 };
 
 function uploadImage(file) {
