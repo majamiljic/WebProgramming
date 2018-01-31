@@ -6,10 +6,11 @@
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="javax.ws.rs.DELETE"/>
 <fullyQualifiedTypeName name="java.util.UUID"/>
-<fullyQualifiedTypeName name="model.Territories"/>
 <fullyQualifiedTypeName name="model.Territory"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="model.EmergencySituation"/>
 <fullyQualifiedTypeName name="model.EmergencySituations"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="model.Comment"/>
+<fullyQualifiedTypeName name="model.Territories"/>
 </qualifiedTypeNameHistroy>

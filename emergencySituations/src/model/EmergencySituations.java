@@ -30,19 +30,13 @@ public class EmergencySituations {
 	public void addSituation(EmergencySituation situation) {
 		if(situation.getId() == null)
 			situation.setId(UUID.randomUUID().toString());
+		if(situation.getComments() == null)
+			situation.setComments(new HashMap<String, Comment>());
 		this.situations.put(situation.getId(), situation);
-	}
-	
-	public void removeSituation(EmergencySituation situation) {
-		this.situations.remove(situation.getId());
 	}
 	
 	public EmergencySituation getSituation(String situationId) {
 		return this.situations.get(situationId);
-	}
-
-	public void removeSituation(String situationId) {
-		this.situations.remove(situationId);
 	}
 
 	@Override

@@ -43,10 +43,6 @@ public class Territories {
 		return this.territories.get(territoryId);
 	}
 
-	public void removeTerritory(String territoryId) {
-		this.territories.remove(territoryId);
-	}
-
 	public boolean territoryExists(String name) {
 		Collection<Territory> t;
 		t = territories.values();

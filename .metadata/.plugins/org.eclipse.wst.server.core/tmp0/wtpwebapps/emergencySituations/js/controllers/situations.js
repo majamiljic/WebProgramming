@@ -217,6 +217,8 @@ function renderSituation(situation, section) {
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"territory" + situation.id + "\"></h6>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"sitDate" + situation.id + "\"></h6>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"sitDescription" + situation.id + "\"></h6>"
+		+ "<a onclick=\"setAddress()\" href=\"map.html\" id=\"map"
+		+ situation.address + ", " + situation.district + "\">See on the Map...</a>"
 		+ "</div></div></div></div></div></div><hr/>";
 		
 	section.prepend(situationhtml);
@@ -426,7 +428,6 @@ function setVolunteer() {
 	});
 }
 
-
 function getPicturePath(picName) {
 	var path = "";
 	$.ajax({
@@ -438,4 +439,38 @@ function getPicturePath(picName) {
 		}
 	});
 	return path + picName + ".jpg";
+}
+
+function setAddress() {
+	var e = window.event;
+	id = $(e.target)[0].id;
+	id = id.split("map")[1];
+	localStorage.setItem("address", id);
+}
+
+function initMap() {
+	var address = localStorage.getItem("address");
+	console.log(address);
+	var map = new google.maps.Map(document.getElementById('mapDiv'), {
+		zoom: 15,
+		center: {lat: 45.2671352, lng: 19.8335496}
+	});
+	
+	var geocoder = new google.maps.Geocoder();
+	geocodeAddress(geocoder, map, address);
+}
+
+function geocodeAddress(geocoder, resultsMap, address) {
+	console.log(address);
+	geocoder.geocode({'address': address}, function(results, status) {
+		if (status === 'OK') {
+			resultsMap.setCenter(results[0].geometry.location);
+			var marker = new google.maps.Marker({
+				map: resultsMap,
+				position: results[0].geometry.location
+			});
+		}
+		else
+        alert('Geocode was not successful for the following reason: ' + status);
+	});
 }

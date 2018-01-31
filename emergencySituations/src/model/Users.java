@@ -27,10 +27,6 @@ public class Users {
 		users.put(user.getUsername(), user);
 	}
 	
-	public void removeUser(User user) {
-		users.remove(user.getUsername());
-	}
-
 	public boolean usernameExists(String username) {
 		return users.get(username) != null;
 	}
