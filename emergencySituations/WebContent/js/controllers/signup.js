@@ -24,6 +24,8 @@ function register() {
 	if(email == "" || username == "" || password == "" || territory == "" ||
 		name == "" || surname == "" || phoneNumber == "" || image == "")
 		window.alert("All fields are required");
+	else if(username.indexOf(' ') !== -1)
+		window.alert("Blank spaces in Username are not allowed");
 	else if(email.indexOf('@') == -1 || email.indexOf('.') == -1)
 		window.alert("Email must contains characters @ and .");
 	else {
