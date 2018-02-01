@@ -1,8 +1,9 @@
 $(document).on('submit', '#loginForm', function(e) {
+	localStorage.setItem("loggedUser", {});
 
 	var loginInfo = {
-		username : $('input#username').val(),
-		password : $('input#password').val()
+		username : $('#username').val(),
+		password : $('#password').val()
 	}
 
 	$.ajax({

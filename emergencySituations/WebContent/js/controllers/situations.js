@@ -189,15 +189,14 @@ function ajaxSearch(serviceUrl, param) {
 }
 
 function renderSituations(data) {
-	var sit = data.situations == null ? 
-			{} : (data.situations instanceof Array ? 
-					data.situations : [ data.situations ]);
-
-	var map = sit[0];
+	var sits = data.situations == null ? {} : data.situations;
+	console.log(sits);
+	
 	var section = $("#situationsDiv");
 	section.empty();
-	Object.keys(map).forEach(function(key) {
-		renderSituation(map[key], section);
+	Object.keys(sits).forEach(function(key) {
+		console.log(sits[key]);
+		renderSituation(sits[key], section);
 	});
 }
 
@@ -211,7 +210,7 @@ function renderSituation(situation, section) {
 		+ "<div class=\"col-md-3\">"
 			+ "<img style=\"width: 170px; height: 130px; margin-top:20px; padding: 5px\" class=\"media-object\" id=\"picture" + situation.id + "\">"
 		+ "</div>"
-		+ "<div class=\"well well-lg\" style=\"height: 200px\" id=\"situationDiv" + situation.id + "\">"
+		+ "<div class=\"well well-lg\" style=\"height: 220px\" id=\"situationDiv" + situation.id + "\">"
 		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"sitName" + situation.id + "\"></h4>"
 		+ "<h4 class=\"media-heading text-uppercase reviews\" id=\"volName" + situation.id + "\"></h4>"
 		+ "<h6 class=\"media-heading text-uppercase reviews\" id=\"territory" + situation.id + "\"></h6>"
@@ -294,7 +293,7 @@ function renderComment(comments) {
 	$.each(comments, function(index, comm) {
 		var $comm = "<div class=\"row\" id=\"comm\"" + comm.id + "\">"
 		+ "<div class=\"col-md-3\">"
-			+ "<img style=\"width: 80px; height: 90px; border-radius:20px; padding: 5px\""
+			+ "<img style=\"width: 100px; height: 110px; border-radius:20px; padding: 5px\""
 			+ "class=\"media-object\" id=\"userPicture" + comm.id + "\">"
 		+ "</div> &nbsp;&nbsp;"
 		+ "<div class=\"col-md-9\">"
